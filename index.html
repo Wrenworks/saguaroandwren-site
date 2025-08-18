@@ -11,24 +11,24 @@
     height: 100%;
     margin: 0;
     background: #000;        /* base color behind the stage */
-    overflow: hidden;        /* no scrollbars when cropping */
+    overflow: hidden;        /* no scrollbars when covering */
   }
 
   /* Full-viewport backdrop that crops overflow */
   #viewport {
     position: fixed;
-    inset: 0;                /* top/right/bottom/left: 0 */
+    inset: 0;
     background: #000;
     overflow: hidden;
   }
 
-  /* IMPORTANT: this is what AdobeAn resizes.
-     We force it to remain centered with translate(-50%, -50%). */
+  /* Animate resizes this element.
+     Horizontally center with translateX, but pin to TOP (no vertical translate). */
   #animation_container {
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);   /* keeps center locked */
+    top: 0;                          /* pin to top */
+    transform: translateX(-50%);     /* center horizontally only */
     will-change: width, height, transform;
   }
 
@@ -42,6 +42,11 @@
   #dom_overlay_container {
     pointer-events: none;
     overflow: hidden;
+  }
+
+  /* Optional iOS safe-area tweak (keeps top aligned under the notch) */
+  @supports (padding: env(safe-area-inset-top)) {
+    #viewport { padding-top: env(safe-area-inset-top); }
   }
 </style>
 
@@ -95,8 +100,8 @@ function handleComplete(evt, comp) {
      - respDim='both' (react to width & height)
      - isScale=true
      - scaleType=2 (cover)
-     We pass the *animation_container* so Animate sizes it,
-     while CSS centers that element (left:50%/top:50%/translate).
+     We pass animation_container so AdobeAn sizes it, while CSS keeps it
+     horizontally centered and aligned to the TOP.
   */
   AdobeAn.makeResponsive(true, 'both', true, 2, [canvas, anim_container, dom_overlay_container]);
 
