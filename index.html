@@ -19,23 +19,33 @@
   html, body {
     height: 100%;
     margin: 0;
-    /* choose a base color that matches your art to avoid any flash */
-    background: #000;
+    background: #000; /* match your background to avoid flashes */
   }
 
-  /* Make the animation fill the viewport (cover) */
-  #animation_container,
-  #canvas,
-  #dom_overlay_container {
+  /* Full-viewport container, centered content */
+  #animation_container {
     position: fixed;
-    inset: 0;            /* top:0; right:0; bottom:0; left:0 */
+    inset: 0;               /* top/right/bottom/left: 0 */
     width: 100vw;
     height: 100vh;
+    display: flex;          /* center the stage horizontally & vertically */
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    overflow: hidden;       /* crop overflow when using cover */
+  }
+
+  /* Canvas and DOM overlay occupy the stage area; Animate will size them */
+  #canvas,
+  #dom_overlay_container {
+    position: absolute;
     display: block;
   }
 
-  /* Optional: if you want clicks to pass through DOM overlay by default */
-  #dom_overlay_container { pointer-events: none; overflow: hidden; }
+  #dom_overlay_container {
+    pointer-events: none;
+    overflow: hidden;
+  }
 </style>
 
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
@@ -46,46 +56,56 @@ function init() {
   canvas = document.getElementById("canvas");
   anim_container = document.getElementById("animation_container");
   dom_overlay_container = document.getElementById("dom_overlay_container");
+
   var comp = AdobeAn.getComposition("5EB7B55DAEFF4DE0842EEF5E2BDFA162");
-  var lib = comp.getLibrary();
+  var lib  = comp.getLibrary();
+
   var loader = new createjs.LoadQueue(false);
-  loader.addEventListener("fileload", function(evt){ handleFileLoad(evt, comp) });
-  loader.addEventListener("complete", function(evt){ handleComplete(evt, comp) });
+  loader.addEventListener("fileload", function(evt){ handleFileLoad(evt, comp); });
+  loader.addEventListener("complete", function(evt){ handleComplete(evt, comp); });
   loader.loadManifest(lib.properties.manifest);
 }
+
 function handleFileLoad(evt, comp) {
   var images = comp.getImages();
-  if (evt && (evt.item.type == "image")) { images[evt.item.id] = evt.result; }
+  if (evt && evt.item.type === "image") images[evt.item.id] = evt.result;
 }
+
 function handleComplete(evt, comp) {
-  //This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
+  // Always called, safe to set up stage now.
   var lib = comp.getLibrary();
-  var ss = comp.getSpriteSheet();
+  var ss  = comp.getSpriteSheet();
   var queue = evt.target;
   var ssMetadata = lib.ssMetadata;
   for (var i=0; i<ssMetadata.length; i++) {
-    ss[ssMetadata[i].name] = new createjs.SpriteSheet({"images": [queue.getResult(ssMetadata[i].name)], "frames": ssMetadata[i].frames});
+    ss[ssMetadata[i].name] = new createjs.SpriteSheet({
+      images: [queue.getResult(ssMetadata[i].name)],
+      frames: ssMetadata[i].frames
+    });
   }
+
   exportRoot = new lib.saguaroandWrenwebsite();
   stage = new lib.Stage(canvas);
-  //Registers the "tick" event listener.
+
   fnStartAnimation = function() {
     stage.addChild(exportRoot);
     createjs.Ticker.framerate = lib.properties.fps;
     createjs.Ticker.addEventListener("tick", stage);
-  }
-  // Code to support hidpi screens and responsive scaling.
-  // Use "cover" scaling (2) and respond to BOTH width & height to avoid letterboxing.
-  AdobeAn.makeResponsive(true, 'both', true, 2, [canvas, anim_container, dom_overlay_container]);
+  };
+
+  // Responsive: isResp=true, respDim='both', isScale=true, scaleType=2 (cover)
+  // Last 'true' centers the stage, so cropping is even on both sides.
+  AdobeAn.makeResponsive(true, 'both', true, 2, [canvas, anim_container, dom_overlay_container], true);
+
   AdobeAn.compositionLoaded(lib.properties.id);
   fnStartAnimation();
 }
 </script>
 </head>
 <body onload="init();">
-  <div id="animation_container" style="background-color:rgba(0,0,0,1);">
-    <!-- Keep the intrinsic size; the responsive scaler will override at runtime -->
-    <canvas id="canvas" width="1920" height="1080" style="background-color:rgba(0,0,0,1);"></canvas>
+  <div id="animation_container">
+    <!-- Keep intrinsic stage size; Animate scales it -->
+    <canvas id="canvas" width="1920" height="1080"></canvas>
     <div id="dom_overlay_container"></div>
   </div>
 </body>
