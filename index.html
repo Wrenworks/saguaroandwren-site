@@ -10,8 +10,8 @@
   html, body {
     height: 100%;
     margin: 0;
-    background: #000;        /* base color behind the stage */
-    overflow: hidden;        /* no scrollbars when covering */
+    background: #000;            /* base color behind the stage */
+    overflow: hidden;            /* no scrollbars when covering */
   }
 
   /* Full-viewport backdrop that crops overflow */
@@ -23,16 +23,16 @@
   }
 
   /* Animate resizes this element.
-     Horizontally center with translateX, but pin to TOP (no vertical translate). */
+     Center horizontally; pin to top so landscape doesn't crop the header. */
   #animation_container {
     position: absolute;
     left: 50%;
-    top: 0;                          /* pin to top */
-    transform: translateX(-50%);     /* center horizontally only */
+    top: 0;
+    transform: translateX(-50%);
     will-change: width, height, transform;
   }
 
-  /* Canvas + overlay occupy the stage rectangle that Animate defines */
+  /* Canvas + overlay fill the stage rectangle that Animate defines */
   #canvas,
   #dom_overlay_container {
     position: absolute;
@@ -44,7 +44,23 @@
     overflow: hidden;
   }
 
-  /* Optional iOS safe-area tweak (keeps top aligned under the notch) */
+  /* Optional fixed CTA if you want a manual trigger too (can remove) */
+  #open-modal-btn{
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 1000;
+    padding: .7rem 1rem;
+    border: 0;
+    border-radius: .6rem;
+    background: #0a7c7c;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    font: 600 14px/1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+
+  /* iOS safe-area notch padding for top-aligned layout (optional) */
   @supports (padding: env(safe-area-inset-top)) {
     #viewport { padding-top: env(safe-area-inset-top); }
   }
@@ -52,63 +68,6 @@
 
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
 <script src="saguaroandWrenwebsite.js?1755556445635"></script>
-<script>
-var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
-
-function init() {
-  canvas               = document.getElementById("canvas");
-  anim_container       = document.getElementById("animation_container");
-  dom_overlay_container= document.getElementById("dom_overlay_container");
-
-  var comp = AdobeAn.getComposition("5EB7B55DAEFF4DE0842EEF5E2BDFA162");
-  var lib  = comp.getLibrary();
-
-  var loader = new createjs.LoadQueue(false);
-  loader.addEventListener("fileload", function(evt){ handleFileLoad(evt, comp); });
-  loader.addEventListener("complete", function(evt){ handleComplete(evt, comp); });
-  loader.loadManifest(lib.properties.manifest);
-}
-
-function handleFileLoad(evt, comp) {
-  var images = comp.getImages();
-  if (evt && evt.item.type === "image") images[evt.item.id] = evt.result;
-}
-
-function handleComplete(evt, comp) {
-  var lib = comp.getLibrary();
-  var ss  = comp.getSpriteSheet();
-  var queue = evt.target;
-  var ssMetadata = lib.ssMetadata;
-  for (var i = 0; i < ssMetadata.length; i++) {
-    ss[ssMetadata[i].name] = new createjs.SpriteSheet({
-      images: [queue.getResult(ssMetadata[i].name)],
-      frames: ssMetadata[i].frames
-    });
-  }
-
-  exportRoot = new lib.saguaroandWrenwebsite();
-  stage = new lib.Stage(canvas);
-
-  fnStartAnimation = function() {
-    stage.addChild(exportRoot);
-    createjs.Ticker.framerate = lib.properties.fps;
-    createjs.Ticker.addEventListener("tick", stage);
-  };
-
-  /* Responsive cover scaling:
-     - isResp=true
-     - respDim='both' (react to width & height)
-     - isScale=true
-     - scaleType=2 (cover)
-     We pass animation_container so AdobeAn sizes it, while CSS keeps it
-     horizontally centered and aligned to the TOP.
-  */
-  AdobeAn.makeResponsive(true, 'both', true, 2, [canvas, anim_container, dom_overlay_container]);
-
-  AdobeAn.compositionLoaded(lib.properties.id);
-  fnStartAnimation();
-}
-</script>
 </head>
 <body onload="init();">
   <div id="viewport">
@@ -118,5 +77,116 @@ function handleComplete(evt, comp) {
       <div id="dom_overlay_container"></div>
     </div>
   </div>
+
+  <!-- Optional manual trigger (delete if you don't want it) -->
+  <button id="open-modal-btn" type="button">Get Updates</button>
+
+  <!-- ====== KIT POPUP EMBED (your snippet) ====== -->
+  <script async data-uid="bfe28e187a" src="https://saguaro-and-wren.kit.com/bfe28e187a/index.js"></script>
+
+  <script>
+  var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
+
+  function init() {
+    canvas               = document.getElementById("canvas");
+    anim_container       = document.getElementById("animation_container");
+    dom_overlay_container= document.getElementById("dom_overlay_container");
+
+    var comp = AdobeAn.getComposition("5EB7B55DAEFF4DE0842EEF5E2BDFA162");
+    var lib  = comp.getLibrary();
+
+    var loader = new createjs.LoadQueue(false);
+    loader.addEventListener("fileload", function(evt){ handleFileLoad(evt, comp); });
+    loader.addEventListener("complete", function(evt){ handleComplete(evt, comp); });
+    loader.loadManifest(lib.properties.manifest);
+  }
+
+  function handleFileLoad(evt, comp) {
+    var images = comp.getImages();
+    if (evt && evt.item.type === "image") images[evt.item.id] = evt.result;
+  }
+
+  function handleComplete(evt, comp) {
+    var lib = comp.getLibrary();
+    var ss  = comp.getSpriteSheet();
+    var queue = evt.target;
+    var ssMetadata = lib.ssMetadata;
+    for (var i = 0; i < ssMetadata.length; i++) {
+      ss[ssMetadata[i].name] = new createjs.SpriteSheet({
+        images: [queue.getResult(ssMetadata[i].name)],
+        frames: ssMetadata[i].frames
+      });
+    }
+
+    exportRoot = new lib.saguaroandWrenwebsite();
+    stage = new lib.Stage(canvas);
+
+    fnStartAnimation = function() {
+      stage.addChild(exportRoot);
+      createjs.Ticker.framerate = lib.properties.fps;
+      createjs.Ticker.addEventListener("tick", stage);
+    };
+
+    // Responsive cover scaling: fill viewport & crop overflow
+    AdobeAn.makeResponsive(true, 'both', true, 2, [canvas, anim_container, dom_overlay_container]);
+
+    AdobeAn.compositionLoaded(lib.properties.id);
+    fnStartAnimation();
+
+    /* ---------- Kit modal integration ---------- */
+    function pauseAnimate(p){ if (window.createjs && createjs.Ticker) createjs.Ticker.paused = !!p; }
+
+    // Heuristics to detect Kit modal visibility (works for kit.com embed)
+    const isVisible = el => {
+      if (!el) return false;
+      const cs = getComputedStyle(el);
+      return el.offsetParent !== null && cs.visibility !== 'hidden' && cs.opacity !== '0' && cs.display !== 'none';
+    };
+
+    // Likely modal containers/selectors used by Kit
+    const modalSelectors = [
+      '.ck-modal',                           // generic ConvertKit modal
+      '[data-ck-modal]',                     // data attribute variant
+      '[id^="ck-"][role="dialog"]',          // ARIA dialog
+      'iframe[src*="kit.com"]',              // hosted iframe
+      'iframe[src*="convertkit"]'
+    ];
+
+    function modalOpen(){
+      for (const sel of modalSelectors) {
+        const el = document.querySelector(sel);
+        if (el && isVisible(el)) return true;
+      }
+      // Some embeds toggle a body class
+      if (document.body.classList.contains('ck-modal-open')) return true;
+      return false;
+    }
+
+    // Observe DOM changes to pause/resume when the popup toggles
+    const mo = new MutationObserver(() => {
+      pauseAnimate(modalOpen());
+    });
+    mo.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class', 'style']
+    });
+
+    // Optional: manual trigger if your Kit embed exposes a trigger element
+    document.getElementById('open-modal-btn').addEventListener('click', function(){
+      // If your embed provides a global opener API, call it here instead.
+      // Example (pseudocode): if (window.ConvertKit?.open) ConvertKit.open('bfe28e187a');
+
+      // Generic nudge: click a visible trigger if present
+      const trigger = document.querySelector('[data-ck-trigger], .ck-open, button[class*="ck-"]');
+      if (trigger) trigger.click();
+    });
+
+    // Safety: also pause if focus moves into a Kit iframe/dialog
+    window.addEventListener('focusin', () => { if (modalOpen()) pauseAnimate(true); });
+    window.addEventListener('focusout', () => { if (!modalOpen()) pauseAnimate(false); });
+  }
+  </script>
 </body>
 </html>
