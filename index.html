@@ -19,26 +19,33 @@
   html, body {
     height: 100%;
     margin: 0;
-    background: #000; /* match your background to avoid flashes */
+    background: #000; /* match your sky base to avoid any flash */
+    overflow: hidden; /* prevent scrollbars when covering */
   }
 
-  /* Full-viewport container, centered content */
-  #animation_container {
+  /* Full-viewport wrapper that centers the Animate container */
+  #viewport {
     position: fixed;
-    inset: 0;               /* top/right/bottom/left: 0 */
-    width: 100vw;
-    height: 100vh;
-    display: flex;          /* center the stage horizontally & vertically */
-    align-items: center;
-    justify-content: center;
+    inset: 0;                 /* top/right/bottom/left: 0 */
+    display: flex;
+    align-items: center;      /* vertical centering */
+    justify-content: center;  /* horizontal centering */
     background: #000;
-    overflow: hidden;       /* crop overflow when using cover */
+    overflow: hidden;
   }
 
-  /* Canvas and DOM overlay occupy the stage area; Animate will size them */
+  /* Animate container: sized dynamically by AdobeAn.makeResponsive */
+  #animation_container {
+    position: relative;       /* keep canvas/overlay positioned inside */
+    /* no fixed width/height here; AdobeAn sets them on resize */
+  }
+
+  /* Canvas and overlay fill the stage area; Animate sets exact pixel size */
   #canvas,
   #dom_overlay_container {
     position: absolute;
+    left: 0;
+    top: 0;
     display: block;
   }
 
@@ -72,12 +79,12 @@ function handleFileLoad(evt, comp) {
 }
 
 function handleComplete(evt, comp) {
-  // Always called, safe to set up stage now.
+  // Always called; safe to set up stage now
   var lib = comp.getLibrary();
   var ss  = comp.getSpriteSheet();
   var queue = evt.target;
   var ssMetadata = lib.ssMetadata;
-  for (var i=0; i<ssMetadata.length; i++) {
+  for (var i = 0; i < ssMetadata.length; i++) {
     ss[ssMetadata[i].name] = new createjs.SpriteSheet({
       images: [queue.getResult(ssMetadata[i].name)],
       frames: ssMetadata[i].frames
@@ -87,15 +94,16 @@ function handleComplete(evt, comp) {
   exportRoot = new lib.saguaroandWrenwebsite();
   stage = new lib.Stage(canvas);
 
+  // Start ticking
   fnStartAnimation = function() {
     stage.addChild(exportRoot);
     createjs.Ticker.framerate = lib.properties.fps;
     createjs.Ticker.addEventListener("tick", stage);
   };
 
-  // Responsive: isResp=true, respDim='both', isScale=true, scaleType=2 (cover)
-  // Last 'true' centers the stage, so cropping is even on both sides.
-  AdobeAn.makeResponsive(true, 'both', true, 2, [canvas, anim_container, dom_overlay_container], true);
+  // Responsive cover scaling: fill viewport and crop overflow
+  // isResp=true, respDim='both', isScale=true, scaleType=2 (cover)
+  AdobeAn.makeResponsive(true, 'both', true, 2, [canvas, anim_container, dom_overlay_container]);
 
   AdobeAn.compositionLoaded(lib.properties.id);
   fnStartAnimation();
@@ -103,10 +111,12 @@ function handleComplete(evt, comp) {
 </script>
 </head>
 <body onload="init();">
-  <div id="animation_container">
-    <!-- Keep intrinsic stage size; Animate scales it -->
-    <canvas id="canvas" width="1920" height="1080"></canvas>
-    <div id="dom_overlay_container"></div>
+  <div id="viewport">
+    <div id="animation_container">
+      <!-- Keep intrinsic stage size; AdobeAn scales it -->
+      <canvas id="canvas" width="1920" height="1080"></canvas>
+      <div id="dom_overlay_container"></div>
+    </div>
   </div>
 </body>
 </html>
