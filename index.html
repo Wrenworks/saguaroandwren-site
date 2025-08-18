@@ -1,12 +1,4 @@
 <!DOCTYPE html>
-<!--
-  NOTES:
-  1. All tokens are represented by '$' sign in the template.
-  2. You can write your code only wherever mentioned.
-  3. All occurrences of existing tokens will be replaced by their appropriate values.
-  4. Blank lines will be removed automatically.
-  5. Remove unnecessary comments before creating your template.
--->
 <html>
 <head>
 <meta charset="UTF-8">
@@ -14,50 +6,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>saguaroandWrenwebsite</title>
 
-<!-- Inline CSS (no external .css required) -->
 <style>
   html, body {
     height: 100%;
     margin: 0;
-    background: #000;        /* match your sky base to avoid flash */
-    overflow: hidden;        /* prevent scrollbars when covering */
+    background: #000;        /* base color behind the stage */
+    overflow: hidden;        /* no scrollbars when cropping */
   }
 
-  /* Full-viewport wrapper */
+  /* Full-viewport backdrop that crops overflow */
   #viewport {
     position: fixed;
     inset: 0;                /* top/right/bottom/left: 0 */
-    display: flex;
-    align-items: center;     /* vertical centering */
-    justify-content: center; /* horizontal centering */
     background: #000;
     overflow: hidden;
   }
 
-  /* This wrapper is what Animate will resize/scale. We keep it centered. */
-  #center-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* No fixed width/height; AdobeAn.makeResponsive will set pixel sizes */
-  }
-
-  /* Animate container holds canvas + dom overlay */
+  /* IMPORTANT: this is what AdobeAn resizes.
+     We force it to remain centered with translate(-50%, -50%). */
   #animation_container {
-    position: relative;  /* keeps children positioned */
-    margin: 0 auto;      /* extra safety for centering */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);   /* keeps center locked */
+    will-change: width, height, transform;
   }
 
-  /* Canvas and overlay fill the stage rectangle Animate defines */
+  /* Canvas + overlay occupy the stage rectangle that Animate defines */
   #canvas,
   #dom_overlay_container {
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 0; top: 0;
     display: block;
   }
-
   #dom_overlay_container {
     pointer-events: none;
     overflow: hidden;
@@ -67,13 +48,12 @@
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
 <script src="saguaroandWrenwebsite.js?1755556445635"></script>
 <script>
-var canvas, stage, exportRoot, anim_container, dom_overlay_container, center_wrapper, fnStartAnimation;
+var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
 
 function init() {
   canvas               = document.getElementById("canvas");
   anim_container       = document.getElementById("animation_container");
   dom_overlay_container= document.getElementById("dom_overlay_container");
-  center_wrapper       = document.getElementById("center-wrapper");
 
   var comp = AdobeAn.getComposition("5EB7B55DAEFF4DE0842EEF5E2BDFA162");
   var lib  = comp.getLibrary();
@@ -90,7 +70,6 @@ function handleFileLoad(evt, comp) {
 }
 
 function handleComplete(evt, comp) {
-  // Set up stage & spritesheets
   var lib = comp.getLibrary();
   var ss  = comp.getSpriteSheet();
   var queue = evt.target;
@@ -113,12 +92,13 @@ function handleComplete(evt, comp) {
 
   /* Responsive cover scaling:
      - isResp=true
-     - respDim='both' (respond to width & height)
+     - respDim='both' (react to width & height)
      - isScale=true
      - scaleType=2 (cover)
-     IMPORTANT: pass #center-wrapper (NOT #animation_container) so we can center it via CSS.
+     We pass the *animation_container* so Animate sizes it,
+     while CSS centers that element (left:50%/top:50%/translate).
   */
-  AdobeAn.makeResponsive(true, 'both', true, 2, [canvas, center_wrapper, dom_overlay_container]);
+  AdobeAn.makeResponsive(true, 'both', true, 2, [canvas, anim_container, dom_overlay_container]);
 
   AdobeAn.compositionLoaded(lib.properties.id);
   fnStartAnimation();
@@ -127,12 +107,10 @@ function handleComplete(evt, comp) {
 </head>
 <body onload="init();">
   <div id="viewport">
-    <div id="center-wrapper">
-      <div id="animation_container">
-        <!-- Keep intrinsic stage size; AdobeAn scales it -->
-        <canvas id="canvas" width="1920" height="1080"></canvas>
-        <div id="dom_overlay_container"></div>
-      </div>
+    <div id="animation_container">
+      <!-- Keep intrinsic stage size; AdobeAn scales it -->
+      <canvas id="canvas" width="1920" height="1080"></canvas>
+      <div id="dom_overlay_container"></div>
     </div>
   </div>
 </body>
