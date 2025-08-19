@@ -15,7 +15,6 @@
     overflow: hidden;
   }
 
-  /* Full-viewport backdrop that crops overflow */
   #viewport {
     position: fixed;
     inset: 0;
@@ -23,7 +22,6 @@
     overflow: hidden;
   }
 
-  /* Animate centers horizontally; pinned to top */
   #animation_container {
     position: absolute;
     left: 50%;
@@ -43,7 +41,6 @@
     #viewport { padding-top: env(safe-area-inset-top); }
   }
 
-  /* ---- Privacy link (bottom-left, plain white) ---- */
   .privacy-link {
     position: fixed;
     left: 10px;
@@ -55,10 +52,10 @@
     letter-spacing: .2px;
   }
 
-  /* ---- Music toggle (speaker icon) ---- */
+  /* Music toggle (speaker icon) */
   #music-toggle {
     position: fixed;
-    bottom: 40px; /* just above Privacy link */
+    bottom: 40px; /* above privacy link */
     left: 10px;
     z-index: 1300;
     background: none;
@@ -74,6 +71,63 @@
     fill: #fff;
     display: block;
   }
+
+  /* Social Widget styles */
+  :root {
+    --sw-gap: 10px;
+    --sw-btn-bg: #000;
+    --sw-btn-fg: #fff;
+    --sw-icon-size: 36px;
+    --sw-z: 1100;
+  }
+  #social-widget {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: var(--sw-z);
+    pointer-events: none;
+  }
+  .sw-panel {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    pointer-events: auto;
+  }
+  .sw-trigger {
+    appearance: none;
+    border: 0;
+    cursor: pointer;
+    background: var(--sw-btn-bg);
+    color: var(--sw-btn-fg);
+    padding: 10px 14px;
+    border-radius: 999px;
+    font: 600 14px/1.1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+  .sw-icons {
+    position: absolute;
+    bottom: 0;
+    right: calc(100% + 8px);
+    display: flex;
+    flex-direction: row-reverse;
+    gap: var(--sw-gap);
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-width .25s ease, opacity .2s ease;
+  }
+  .sw-panel[aria-expanded="true"] .sw-icons {
+    max-width: min(92vw, 560px);
+    opacity: 1;
+  }
+  .sw-icons a {
+    width: var(--sw-icon-size);
+    height: var(--sw-icon-size);
+    display: inline-grid;
+    place-items: center;
+    color: white;
+    text-decoration: none;
+  }
+  .sw-icons svg { width: 22px; height: 22px; display: block; }
 </style>
 
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
@@ -95,11 +149,10 @@
 
   <script>
   var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
-
   function init() {
-    canvas               = document.getElementById("canvas");
-    anim_container       = document.getElementById("animation_container");
-    dom_overlay_container= document.getElementById("dom_overlay_container");
+    canvas = document.getElementById("canvas");
+    anim_container = document.getElementById("animation_container");
+    dom_overlay_container = document.getElementById("dom_overlay_container");
 
     var comp = AdobeAn.getComposition("5EB7B55DAEFF4DE0842EEF5E2BDFA162");
     var lib  = comp.getLibrary();
@@ -109,12 +162,10 @@
     loader.addEventListener("complete", function(evt){ handleComplete(evt, comp); });
     loader.loadManifest(lib.properties.manifest);
   }
-
   function handleFileLoad(evt, comp) {
     var images = comp.getImages();
     if (evt && evt.item.type === "image") images[evt.item.id] = evt.result;
   }
-
   function handleComplete(evt, comp) {
     var lib = comp.getLibrary();
     var ss  = comp.getSpriteSheet();
@@ -134,38 +185,62 @@
       createjs.Ticker.framerate = lib.properties.fps;
       createjs.Ticker.addEventListener("tick", stage);
     };
-
-    /* Fill viewport & crop overflow */
     AdobeAn.makeResponsive(true, 'both', true, 2, [canvas, anim_container, dom_overlay_container]);
-
     AdobeAn.compositionLoaded(lib.properties.id);
     fnStartAnimation();
   }
   </script>
 
 <!-- === Floating Connect / Social Widget === -->
-<!-- (keeping your widget code as-is) -->
+<div id="social-widget" aria-live="polite">
+  <div class="sw-panel" aria-expanded="false">
+    <div class="sw-icons" role="group" aria-label="Connect on social">
+      <!-- Email -->
+      <a href="mailto:saguaroandwren@gmail.com" aria-label="Email">
+        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M2 5h20v14H2V5zm2 2v10h16V7l-8 5L4 7z"/></svg>
+      </a>
+      <!-- Instagram -->
+      <a href="https://instagram.com/saguaroandwren" target="_blank" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.25" fill="currentColor"/></svg>
+      </a>
+      <!-- X -->
+      <a href="https://x.com/saguaroandwren" target="_blank" aria-label="X">
+        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 3l8.3 9.6L3.6 21h2.6l6.3-6.8L18.7 21H21l-8-9.6L20.6 3h-2.6l-6 6.5L7 3H3z"/></svg>
+      </a>
+    </div>
+    <!-- Trigger -->
+    <button class="sw-trigger" type="button" id="sw-trigger">Connect</button>
+  </div>
+</div>
+
+<script>
+  (function(){
+    const panel = document.querySelector('.sw-panel');
+    const trigger = document.getElementById('sw-trigger');
+    const list = document.querySelector('.sw-icons');
+    function setExpanded(on){
+      panel.setAttribute('aria-expanded', on ? 'true' : 'false');
+      trigger.setAttribute('aria-expanded', on ? 'true' : 'false');
+    }
+    trigger.addEventListener('click', () => {
+      const open = panel.getAttribute('aria-expanded') === 'true';
+      setExpanded(!open);
+    });
+  })();
+</script>
 <!-- === /Floating Connect / Social Widget === -->
 
 <!-- === Background Music === -->
 <audio id="bg-audio" loop preload="auto" muted>
   <source src="assets/audio/sentimental-cinematic-loop-longing-road-compressed.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
 </audio>
-
 <button id="music-toggle" aria-label="Toggle music"></button>
-
 <script>
   const audio = document.getElementById('bg-audio');
-  const btn   = document.getElementById('music-toggle');
-
-  const speakerOn = `
-    <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M14 9.23v5.54c.58-.45 1-.99 1.26-1.54.26-.55.4-1.18.4-1.83s-.14-1.28-.4-1.83c-.26-.55-.68-1.09-1.26-1.54z"/></svg>`;
-  const speakerOff = `
-    <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M19 3L3 19l1.5 1.5L20.5 4.5 19 3z"/></svg>`;
-
+  const btn = document.getElementById('music-toggle');
+  const speakerOn = `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M14 9.23v5.54c.58-.45 1-.99 1.26-1.54.26-.55.4-1.18.4-1.83s-.14-1.28-.4-1.83c-.26-.55-.68-1.09-1.26-1.54z"/></svg>`;
+  const speakerOff = `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M19 3L3 19l1.5 1.5L20.5 4.5 19 3z"/></svg>`;
   btn.innerHTML = speakerOff;
-
   btn.addEventListener('click', () => {
     if (audio.paused) {
       audio.play();
