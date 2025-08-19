@@ -1,87 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About — Saguaro & Wren</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌵</text></svg>">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About – Saguaro & Wren</title>
   <style>
     body {
       margin: 0;
-      padding: 0 12px;
-      font-family: system-ui, sans-serif;
-      background: linear-gradient(to bottom, #f4e1c1, #e0c097, #c19a6b);
-      color: #2b2b2b;
-      line-height: 1.5;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: #fdfaf5;
+      color: #333;
+      line-height: 1.6;
     }
-    h1, h2 {
-      color: #5a3e2b;
-      text-align: center;
-      margin-top: 1.5em;
-    }
-    .section {
-      max-width: 800px;
-      margin: 1.5em auto;
-      padding: 1em;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 8px;
-    }
-    .author-pic {
-      display: block;
-      max-width: 150px;
-      border-radius: 50%;
-      margin: 0.5em auto 1em;
-    }
-    .character-art {
-      display: block;
-      max-width: 120px;
-      margin: 0.5em auto 1em;
-    }
-    .back-link {
-      position: fixed;
-      left: 10px;
-      bottom: 10px;
+
+    header {
+      background: #c48c3a;
       color: #fff;
-      text-decoration: none;
-      font: 500 12px/1.2 system-ui;
+      padding: 1rem;
+      text-align: center;
     }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    h1, h2, h3 {
+      font-family: "Georgia", serif;
+      color: #2d2d2d;
+    }
+
+    .profile, .character, .setting {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .profile img, .character img, .setting img {
+      max-width: 280px;
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+
+    .text {
+      flex: 1;
+      min-width: 250px;
+    }
+
     a {
-      color: #5a3e2b;
+      color: #c48c3a;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      background: #333;
+      color: #eee;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
-  <h1>About Saguaro & Wren</h1>
+  <header>
+    <h1>About Saguaro & Wren</h1>
+  </header>
 
-  <section class="section">
-    <h2>The Setting: Sonoran Desert</h2>
-    <p>
-      Saguaro & Wren is set amid the vast Sonoran Desert—a place of stark beauty and surprising life. It’s the only place in the world where the iconic saguaro cactus (Carnegiea gigantea) grows wild :contentReference[oaicite:2]{index=2}. The Sonoran is renowned for its incredible biodiversity and unique bi-seasonal rain patterns :contentReference[oaicite:3]{index=3}.
-    </p>
-    <p>
-      These giant saguaros can live up to 200 years, grow 10–40 feet (sometimes even higher), and their root systems stretch wide—up to 100 feet :contentReference[oaicite:4]{index=4}. The landscape is protected in part by <a href="https://www.nps.gov/sagu/index.htm" target="_blank">Saguaro National Park</a>, which sprawls over both sides of Tucson and safeguards these desert giants :contentReference[oaicite:5]{index=5}.
-    </p>
-  </section>
+  <main>
+    <!-- Characters -->
+    <section>
+      <h2>Meet the Characters</h2>
 
-  <section class="section">
-    <h2>Characters</h2>
-    <img src="assets/images/wren_rain.jpg" alt="Wren in rain illustration" class="character-art" />
-    <p>
-      **Wren** is a small but spirited bird perched atop the desert giants—observant, dryly witty, and always ready with a quip that undercuts the seriousness of the landscape. They see the absurdity in everyday survival, and remind us that even the prickliest places can teach us to find humor in hardship.
-    </p>
-  </section>
+      <div class="character">
+        <img src="assets/images/wren_rain.jpg" alt="Wren in the rain">
+        <div class="text">
+          <h3>Wren</h3>
+          <p>Wren is the endlessly curious desert bird who brings humor and heart to the Sonoran Desert. Whether he's juggling mindfulness, chasing shade, or dodging dust storms, his perspective keeps things light and playful.</p>
+        </div>
+      </div>
 
-  <section class="section">
-    <h2>Author & Artist</h2>
-    <img src="assets/images/RicardoPorven.jpg" alt="Ricardo Porven" class="author-pic" />
-    <p>
-      <strong>Ricardo Porven</strong> is an illustrator, writer, and indie comic creator with a career that spans illustration, writing, photography, and film production :contentReference[oaicite:6]{index=6}. He is best known for the webcomic <em>Donnie Goth</em>—a darkly humorous tale about a teenage Goth boy and his zombie-raising salamander, which gained a massive following online and was even released in book form {{citeturn0search4turn0search11turn0search9}}.
-    </p>
-    <p>
-      With <em>Saguaro & Wren</em>, Ricardo travels into the heart of the American Southwest—bringing to life the quirky, quiet moments that bloom in arid landscapes.
-    </p>
-  </section>
+      <div class="character">
+        <img src="assets/images/saguaro_solo.jpg" alt="Saguaro cactus">
+        <div class="text">
+          <h3>Saguaro</h3>
+          <p>Saguaro is the tall, steady counterpart to Wren. Rooted in the desert sands, he often provides the dry wit (and sometimes dry wisdom) in the duo’s adventures. Life may be prickly, but he’s seen it all.</p>
+        </div>
+      </div>
+    </section>
 
-  <a class="back-link" href="index.html">← Back to Home</a>
+    <!-- Setting -->
+    <section>
+      <h2>The Setting</h2>
+      <div class="setting">
+        <img src="assets/images/sonoran-desert.jpg" alt="Sonoran Desert landscape">
+        <div class="text">
+          <p>The stories of <em>Saguaro & Wren</em> unfold in the heart of the Sonoran Desert — a place of stunning beauty and extremes. Home to the majestic saguaro cactus, this desert spans parts of Arizona, California, and Mexico. It’s one of the most biodiverse deserts in the world, alive with unique plants, animals, and vibrant sunsets.</p>
+          <p>If you’d like to explore this real-life landscape, visit <a href="https://www.nps.gov/sagu/index.htm" target="_blank" rel="noopener">Saguaro National Park</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Author -->
+    <section>
+      <h2>About the Author</h2>
+      <div class="profile">
+        <img src="assets/images/RicardoPorven.jpg" alt="Ricardo Porven">
+        <div class="text">
+          <h3>Ricardo Porven</h3>
+          <p>Ricardo Porven is the writer and artist behind <em>Saguaro & Wren</em>. He’s been creating comics for years, blending humor with thoughtful storytelling. His previous work includes <em>Donnie Goth</em>, an indie comic that earned attention for its unique mix of gothic themes and slice-of-life storytelling. With <em>Saguaro & Wren</em>, Ricardo brings his love of comics, Arizona landscapes, and quirky characters together into one desert-inspired strip.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Ricardo Porven. All Rights Reserved.
+  </footer>
 </body>
 </html>
