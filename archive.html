@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saguaro & Wren – Archive</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌵</text></svg>">
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: url("assets/images/desertbsackground_day.jpg") no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    /* --- Header (logo + hamburger) --- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 12px 18px;
+      z-index: 1000;
+    }
+    header img.logo {
+      height: 40px;
+      margin-right: auto;
+    }
+    .menu-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 1100;
+    }
+    .menu-toggle svg {
+      width: 28px;
+      height: 28px;
+      fill: #fff;
+    }
+
+    /* --- Dropdown Menu --- */
+    nav {
+      position: absolute;
+      top: 60px;
+      right: 18px;
+      background: white;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: none;
+      flex-direction: column;
+      min-width: 180px;
+      z-index: 1000;
+    }
+    nav a {
+      padding: 10px 16px;
+      color: #000;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    nav a:hover {
+      background: #f2f2f2;
+    }
+    nav.show {
+      display: flex;
+    }
+
+    /* --- Page Content --- */
+    .container {
+      max-width: 1000px;
+      margin: 100px auto 40px auto;
+      background: rgba(255,255,255,0.92);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      gap: 20px;
+    }
+    .strip {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+    .strip img {
+      width: 100%;
+      height: auto; /* keeps original proportions */
+      display: block;
+    }
+    .strip h2 {
+      margin: 10px;
+      font-size: 16px;
+    }
+
+    /* --- Mobile tweaks --- */
+    @media (max-width: 600px) {
+      .container {
+        margin: 80px 15px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <img src="assets/images/SaguaroWren-vector_logo-row.png" alt="Saguaro & Wren" class="logo">
+    <button class="menu-toggle" aria-label="Toggle menu">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <nav id="menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="archive.html">Archive</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </nav>
+  </header>
+
+  <!-- Archive Content -->
+  <div class="container">
+    <h1>Archive</h1>
+    <div class="grid" id="archive-grid"></div>
+  </div>
+
+  <script>
+    // --- Hamburger toggle ---
+    const menuToggle = document.querySelector('.menu-toggle');
+    const menu = document.getElementById('menu');
+    menuToggle.addEventListener('click', () => {
+      menu.classList.toggle('show');
+    });
+
+    // --- Load strips from JSON ---
+    fetch('assets/strips.json')
+      .then(res => res.json())
+      .then(data => {
+        const grid = document.getElementById('archive-grid');
+        data.forEach(strip => {
+          const div = document.createElement('div');
+          div.className = 'strip';
+          div.innerHTML = `
+            <img src="${strip.image}" alt="${strip.title}">
+            <h2>${strip.title}</h2>
+          `;
+          grid.appendChild(div);
+        });
+      })
+      .catch(err => console.error('Error loading strips:', err));
+  </script>
+
+</body>
+</html>
