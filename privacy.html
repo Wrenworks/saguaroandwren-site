@@ -4,16 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy - Saguaro & Wren</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/images/SaguaroWren-vector_logo-row.png">
+
   <style>
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
       background: url('assets/images/desertbackground-night.jpg') no-repeat center center fixed;
       background-size: cover;
     }
 
-    /* Header: logo + hamburger (use About as master) */
+    /* Header (logo + hamburger) */
     header {
       position: fixed;
       top: 0;
@@ -27,7 +28,7 @@
     }
 
     header img {
-      height: 44px; /* match About page logo size */
+      height: 44px;
       margin-right: 12px;
     }
 
@@ -36,8 +37,15 @@
       background: none;
       border: none;
       cursor: pointer;
+      color: #fff; /* always white */
+    }
+    .menu-toggle:focus,
+    .menu-toggle:active {
+      outline: none;
+      color: #fff;
     }
 
+    /* Dropdown Menu */
     .menu {
       display: none;
       position: absolute;
@@ -45,55 +53,85 @@
       right: 15px;
       background: #fff;
       border-radius: 6px;
-      box-shadow: 0 4px 10px rgba(0,0,0,.15);
-      padding: 10px 0;
-      min-width: 180px; /* match About menu width */
-      z-index: 2100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      width: 180px;
     }
 
     .menu a {
       display: block;
-      padding: 10px 20px;
+      padding: 10px 14px;
       color: #000;
-      font-weight: 500;
-      font-family: inherit; /* force same font */
       text-decoration: none;
+      font-weight: 500;
+      font-size: 16px;
     }
 
     .menu a:hover {
       background: #f2f2f2;
     }
 
-    /* Main container */
-    .policy-container {
-      background: rgba(255,255,255,0.9);
-      margin: 90px auto 40px auto; /* below header */
-      padding: 20px;
-      border-radius: 10px;
+    /* Container for Policy */
+    .container {
       max-width: 800px;
+      margin: 100px auto 40px auto;
+      background: rgba(255,255,255,0.95);
+      border-radius: 12px;
+      padding: 25px 30px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
     }
 
-    /* Mobile margins */
-    @media (max-width: 600px) {
-      .policy-container {
-        margin: 90px 15px 40px 15px;
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 25px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    p {
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+      .container {
+        margin: 90px 15px 30px 15px; /* 15px left/right margin */
+      }
+      header img {
+        height: 38px;
       }
     }
   </style>
 </head>
 <body>
 
+  <!-- Header -->
   <header>
     <img src="assets/images/SaguaroWren-vector_logo-row.png" alt="Saguaro & Wren Logo">
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-    <div class="menu" id="dropdownMenu">
+    <nav class="menu" id="dropdownMenu">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="privacy.html">Privacy Policy</a>
-    </div>
+    </nav>
   </header>
 
-  <div class="policy-container">
+  <!-- Privacy Content -->
+  <div class="container">
     <h1>Privacy Policy</h1>
     <p><strong>Last updated:</strong> August 2025</p>
 
@@ -107,14 +145,10 @@
     <p>Our website may use basic cookies for functionality, but we do not use cookies for tracking or advertising purposes.</p>
 
     <h2>Your Rights</h2>
-    <p>You may unsubscribe from our mailing list at any time using the unsubscribe link in our emails or by contacting us directly at 
-      <a href="mailto:saguaroandwren@gmail.com">saguaroandwren@gmail.com</a>.
-    </p>
+    <p>You may unsubscribe from our mailing list at any time using the unsubscribe link in our emails or by contacting us directly at <a href="mailto:saguaroandwren@gmail.com">saguaroandwren@gmail.com</a>.</p>
 
     <h2>Contact Us</h2>
-    <p>If you have any questions about this Privacy Policy, you can reach us at: 
-      <a href="mailto:saguaroandwren@gmail.com">saguaroandwren@gmail.com</a>.
-    </p>
+    <p>If you have any questions about this Privacy Policy, you can reach us at: <a href="mailto:saguaroandwren@gmail.com">saguaroandwren@gmail.com</a>.</p>
   </div>
 
   <script>
@@ -122,6 +156,15 @@
       const menu = document.getElementById('dropdownMenu');
       menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
     }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const menu = document.getElementById('dropdownMenu');
+      const toggle = document.querySelector('.menu-toggle');
+      if (!menu.contains(event.target) && !toggle.contains(event.target)) {
+        menu.style.display = 'none';
+      }
+    });
   </script>
 
 </body>
