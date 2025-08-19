@@ -362,5 +362,30 @@
   })();
 </script>
 <!-- === /Floating Connect / Social Widget === -->
+  <!-- === Background Music === -->
+<audio id="bg-music" autoplay loop muted>
+  <source src="assets/audio/sentimental-cinematic-loop-longing-road-compressed.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<!-- Music toggle button -->
+<button id="music-toggle" style="position:fixed;bottom:40px;left:10px;z-index:1300;background:rgba(0,0,0,0.6);color:#fff;border:none;padding:6px 10px;border-radius:4px;cursor:pointer;font:500 12px/1.2 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+  🔇 Music
+</button>
+
+<script>
+  const audio = document.getElementById('bg-music');
+  const toggle = document.getElementById('music-toggle');
+  toggle.addEventListener('click', () => {
+    if (audio.muted) {
+      audio.muted = false;
+      toggle.textContent = '🔊 Music';
+    } else {
+      audio.muted = true;
+      toggle.textContent = '🔇 Music';
+    }
+  });
+</script>
+<!-- === /Background Music === -->
 </body>
 </html>
