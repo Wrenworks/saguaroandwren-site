@@ -6,95 +6,107 @@
   <title>Privacy Policy - Saguaro & Wren</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌵</text></svg>">
   <style>
-    /* Desert tones background */
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      font-family: system-ui, sans-serif;
       background: linear-gradient(to bottom, #f4e1c1, #e0c097, #c19a6b);
-      color: #2b2b2b;
       line-height: 1.6;
-      padding: 20px;
     }
-
+    .container {
+      max-width: 800px;
+      margin: 100px auto;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    }
     h1, h2 {
       color: #5a3e2b;
     }
-
-    a {
-      color: #5a3e2b;
-      text-decoration: underline;
-    }
-
-    /* Back to Home link at bottom-left */
-    .privacy-link {
+    a { color: #5a3e2b; }
+    
+    /* --- Header --- */
+    .site-header {
       position: fixed;
-      left: 10px;
-      bottom: 10px;
-      z-index: 1200;
-      color: #000000;               /* base black */
-      text-decoration: underline;   /* add underline for visibility */
-      font: 600 13px/1.2 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      letter-spacing: .3px;
-      text-shadow: 0px 0px 0px rgba(0,0,0,0); /* improve contrast */
+      top: 10px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      z-index: 2000;
     }
-
-    .privacy-link:hover {
-      color: #754c24; /* brown on hover */
+    .site-header img {
+      height: 40px;
+      margin-right: 10px;
     }
-
-    .container {
-      max-width: 800px;
-      margin: auto;
-      background: rgba(255, 255, 255, 0.75);
-      padding: 20px 30px;
-      border-radius: 10px;
+    .menu-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .menu-btn svg {
+      width: 28px;
+      height: 28px;
+      fill: #fff;
+    }
+    .menu {
+      display: none;
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: #fff;
+      border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+    .menu a {
+      display: block;
+      padding: 10px 15px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+    .menu a:hover {
+      background: #eee;
     }
   </style>
 </head>
 <body>
+  <!-- Floating Header -->
+  <div class="site-header">
+    <img src="images/Saguaro&Wren-vector_logo-row.png" alt="Saguaro & Wren Logo">
+    <button class="menu-btn" id="menu-toggle" aria-label="Menu">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    </button>
+    <div class="menu" id="menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+
   <div class="container">
     <h1>Privacy Policy</h1>
     <p><strong>Last updated:</strong> August 2025</p>
-
-    <p>
-      At <em>Saguaro &amp; Wren</em>, we value your privacy. This Privacy Policy explains how
-      we collect, use, and protect any information you provide to us.
-    </p>
-
+    <p>At <em>Saguaro &amp; Wren</em>, we value your privacy...</p>
     <h2>Information We Collect</h2>
-    <p>
-      When you sign up for our newsletter or contact us via email, we may collect your email address
-      and any other information you choose to share.
-    </p>
-
+    <p>When you sign up...</p>
     <h2>How We Use Your Information</h2>
-    <p>
-      We use your information solely to send you updates, newsletters, and announcements
-      about our work. We will never sell or share your information with third parties without
-      your consent, except where required by law.
-    </p>
-
+    <p>We use your information solely...</p>
     <h2>Cookies</h2>
-    <p>
-      Our website may use basic cookies for functionality, but we do not use cookies for tracking
-      or advertising purposes.
-    </p>
-
+    <p>Our website may use...</p>
     <h2>Your Rights</h2>
-    <p>
-      You may unsubscribe from our mailing list at any time using the unsubscribe link in our emails
-      or by contacting us directly at <a href="mailto:saguaroandwren@gmail.com">saguaroandwren@gmail.com</a>.
-    </p>
-
+    <p>You may unsubscribe...</p>
     <h2>Contact Us</h2>
-    <p>
-      If you have any questions about this Privacy Policy, you can reach us at:<br>
-      <a href="mailto:saguaroandwren@gmail.com">saguaroandwren@gmail.com</a>
-    </p>
+    <p>If you have any questions... <a href="mailto:saguaroandwren@gmail.com">saguaroandwren@gmail.com</a></p>
   </div>
 
-  <!-- Back to Home -->
-  <a class="privacy-link" href="index.html">Back to Home</a>
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+    menuToggle.addEventListener('click', () => {
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    });
+  </script>
 </body>
 </html>
