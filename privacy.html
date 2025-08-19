@@ -31,10 +31,15 @@
       left: 10px;
       bottom: 10px;
       z-index: 1200;
-      color: #fff;                 /* plain white */
-      text-decoration: none;       /* keep plain */
-      font: 500 12px/1.2 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      letter-spacing: .2px;
+      color: #ffffff;               /* base white */
+      text-decoration: underline;   /* add underline for visibility */
+      font: 600 13px/1.2 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      letter-spacing: .3px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.6); /* improve contrast */
+    }
+
+    .privacy-link:hover {
+      color: #fffae6; /* subtle off-white on hover */
     }
 
     .container {
