@@ -3,160 +3,233 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About - Saguaro & Wren</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 
-  viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌵</text></svg>">
-
+  <title>About Saguaro & Wren</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌵</text></svg>">
   <style>
     body {
       margin: 0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background: url("assets/images/desertbackground.jpg") no-repeat center center fixed;
+      background: url('assets/images/desertbackground.jpg') no-repeat center center fixed;
       background-size: cover;
-      line-height: 1.6;
       color: #2b2b2b;
+      line-height: 1.6;
+    }
+
+    .header {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo {
+      height: 40px;
+      width: auto;
+    }
+
+    .hamburger {
+      font-size: 28px;
+      cursor: pointer;
+      color: white;
+      background: none;
+      border: none;
+    }
+
+    .menu {
+      display: none;
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: white;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      padding: 10px;
+      min-width: 160px;
+      text-align: right;
+    }
+    .menu a {
+      display: block;
+      padding: 8px 12px;
+      color: #2b2b2b;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .menu a:hover {
+      background: #f0f0f0;
     }
 
     .container {
       max-width: 900px;
-      margin: 40px auto;
-      background: rgba(255, 255, 255, 0.9);
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.85);
       padding: 20px 30px;
       border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      margin-top: 80px; /* sits below header */
     }
 
     @media (max-width: 768px) {
       .container {
-        margin: 20px 15px; /* 15px margin on mobile */
+        margin: 80px 15px 20px; /* adds side margin on mobile */
       }
     }
 
-    h1, h2 {
+    h1 {
+      text-align: center;
+      font-size: 1.8rem; /* smaller title */
       margin-top: 0;
     }
 
-    .section-title {
+    h2 {
+      font-size: 1.2rem;
+      margin-top: 30px;
       background: #5c5f0e;
-      color: #fff;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 4px;
+      display: inline-block;
       font-weight: 700;
-      padding: 8px 12px;
-      border-radius: 6px;
-      margin: 30px 0 15px 0;
     }
 
-    .characters {
+    .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
+      margin-top: 15px;
+    }
+    .two-col img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      display: block;
     }
     @media (max-width: 768px) {
-      .characters {
+      .two-col {
         grid-template-columns: 1fr;
       }
     }
-    .characters img {
-      width: 100%;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
 
-    .fullwidth-img {
-      width: 100%;
-      border-radius: 8px;
-      margin: 20px 0;
+    a {
+      color: #5a3e2b;
+      text-decoration: underline;
     }
+    /* Author bio layout */
+.author-bio {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+}
 
-    .author-bio {
-      background: rgba(255,255,255,0.75);
-      padding: 15px 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    }
+.author-photo {
+  max-width: 220px;   /* insert-sized */
+  border-radius: 8px;
+  flex-shrink: 0;
+}
 
-    a { color: #5c5f0e; text-decoration: underline; }
+.author-text {
+  flex: 1;
+}
+
+/* Mobile: stack photo above text */
+@media (max-width: 768px) {
+  .author-bio {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .author-photo {
+    max-width: 70%;
+    margin-bottom: 15px;
+  }
+}
   </style>
 </head>
 <body>
 
-  <!-- Header with logo + hamburger -->
-  <header style="position:fixed; top:10px; right:10px; z-index:1200; display:flex; align-items:center; gap:10px;">
-    <img src="assets/images/SaguaroWren-vector_logo-row.png" alt="Saguaro & Wren logo" style="height:28px;">
-    <button id="menu-toggle" style="background:none;border:none;cursor:pointer;">
-      <svg width="28" height="28" viewBox="0 0 100 80" fill="#fff">
-        <rect width="100" height="10"></rect>
-        <rect y="30" width="100" height="10"></rect>
-        <rect y="60" width="100" height="10"></rect>
-      </svg>
-    </button>
-  </header>
-
-  <!-- Dropdown menu -->
-  <nav id="dropdown-menu" style="display:none;position:fixed;top:50px;right:10px;
-    background:#fff;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.3);
-    padding:10px;z-index:1199;min-width:160px;">
-    <a href="index.html" style="display:block;padding:8px 12px;color:#333;text-decoration:none;">Home</a>
-    <a href="about.html" style="display:block;padding:8px 12px;color:#333;text-decoration:none;">About</a>
-    <a href="privacy.html" style="display:block;padding:8px 12px;color:#333;text-decoration:none;">Privacy Policy</a>
-  </nav>
+  <!-- Header -->
+  <div class="header">
+    <img src="assets/images/SaguaroWren-vector_logo-row.png" alt="Saguaro & Wren logo" class="logo">
+    <button class="hamburger" id="hamburger">&#9776;</button>
+    <div class="menu" id="menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+  </div>
 
   <div class="container">
     <h1>About Saguaro & Wren</h1>
 
-    <p><em>Saguaro & Wren</em> is a comic strip rooted in the strange and enchanting rhythms of the Sonoran Desert. 
-    The series blends dry humor, heartfelt character moments, and surreal adventures that reflect the harsh beauty of the desert 
-    and the bonds that grow within it. Each strip balances whimsy with reflection, exploring resilience, companionship, and 
-    the occasional tumbleweed chaos.</p>
+    <p>
+      <em>Saguaro & Wren</em> is a comic strip set in the vast beauty of the Sonoran Desert, where
+      a towering cactus and a sharp-witted bird navigate the humor, struggles, and unexpected
+      companionships of desert life. Through humor and reflection, the strip explores friendship,
+      survival, and the odd poetry of the natural world.
+    </p>
 
-    <h2 class="section-title">The Characters</h2>
-    <div class="characters">
+    <h2>The Characters</h2>
+    <div class="two-col">
       <div>
         <img src="assets/images/saguaro_solo.jpg" alt="Saguaro">
-        <p><strong>Saguaro</strong> is a towering cactus with a dry wit and a pragmatic outlook. Despite being rooted in one place, 
-        he has a surprising depth of perspective. He is often the voice of reason, though his patience is frequently tested by Wren’s 
-        antics. His sharp spines and sharp humor make him both a protector and a skeptic.</p>
+        <p>
+          <strong>Saguaro</strong> is the stoic giant of the desert — tall, resilient, and slow to act,
+          but with a quiet wisdom. He represents patience and endurance, a rooted figure who’s seen
+          generations of desert change. His humor is dry (literally) and his loyalty unshakable.
+        </p>
       </div>
       <div>
         <img src="assets/images/wren_rain.jpg" alt="Wren">
-        <p><strong>Wren</strong> is small, restless, and endlessly curious. A chatterbox and a dreamer, she sees the world 
-        in endless possibilities. While her schemes often lead to misadventure, her optimism balances Saguaro’s grounded nature. 
-        Together, they form an unlikely but endearing duo navigating life in the desert.</p>
+        <p>
+          <strong>Wren</strong> is Saguaro’s unlikely companion — fast, impulsive, clever, and full
+          of sharp commentary. While Saguaro grounds their adventures, Wren gives them flight (and
+          trouble). Together they balance the contrast between strength and agility, silence and chatter,
+          patience and spontaneity.
+        </p>
       </div>
     </div>
 
-    <h2 class="section-title">The Setting</h2>
-    <img src="assets/images/sonoran-desert.jpg" alt="Sonoran Desert" class="fullwidth-img">
-    <p>The strip is set in the <strong>Sonoran Desert</strong>, a landscape filled with extremes: scorching summers, vibrant flora, 
-    and resilient wildlife. Known for its iconic saguaro cactus and breathtaking sunsets, the Sonoran is a land of survival and beauty. 
-    Its contrasts mirror the humor and struggles of our characters, making it the perfect backdrop for their adventures. 
-    Learn more about the region at <a href="https://www.nps.gov/sagu/index.htm" target="_blank">Saguaro National Park</a>.</p>
+    <h2>The Setting</h2>
+    <img src="assets/images/sonoran-desert.jpg" alt="Sonoran Desert">
+    <p>
+      The strip takes place in the <strong>Sonoran Desert</strong>, a living landscape spanning parts of
+      Arizona, California, and Mexico. It is one of the most biodiverse deserts in the world, home not
+      only to saguaros and wrens but also to coyotes, jackrabbits, rattlesnakes, and blooming desert
+      wildflowers. For more on this remarkable landscape, visit
+      <a href="https://www.nps.gov/sagu/index.htm" target="_blank">Saguaro National Park</a>.
+    </p>
 
-    <h2 class="section-title">About the Author</h2>
-    <div class="author-bio">
-      <img src="assets/images/RicardoPorven.jpg" alt="Ricardo Porven" style="width:100%;border-radius:8px;margin-bottom:10px;">
-      <p><strong>Ricardo Porven</strong> is the writer and artist behind <em>Saguaro & Wren</em>. A veteran of the independent comics scene, 
-      Ricardo is best known as the creator of <a href="https://www.webtoons.com/en/canvas/donnie-goth/list?title_no=690320" target="_blank">Donnie Goth</a>, 
-      a cult-favorite series that explored gothic subculture through sharp humor and vivid characters.</p>
-      <p>His career has spanned decades of storytelling, and his work has been featured in interviews with 
-      <a href="https://webcomicoverlook.wordpress.com/2012/08/13/who-are-you-an-interview-with-ricardo-porven-donnie-goth/" target="_blank">The Webcomic Overlook</a> 
-      and <a href="https://www.shockya.com/news/2011/10/12/interview-meet-the-man-behind-the-goth-ricardo-porven-donnie-goths-master-mad-man/" target="_blank">ShockYa</a>, 
-      where he shared insights into his creative process and passion for visual storytelling.</p>
-      <p>Through <em>Saguaro & Wren</em>, Ricardo brings his sharp humor, eye for character, and love of surreal desert imagery 
-      into a strip that is as thoughtful as it is entertaining.</p>
+    <!-- === Author Bio Section === -->
+<section class="about-section">
+  <h2>About the Author</h2>
+  <div class="author-bio">
+    <img src="assets/images/RicardoPorven.jpg" alt="Ricardo Porven" class="author-photo">
+    <div class="author-text">
+      <p>
+        Ricardo Porven is the creator, author, and artist behind <em>Saguaro &amp; Wren</em>. 
+        He is also well known as the author and artist of <a href="https://www.webtoons.com/en/canvas/donnie-goth/list?title_no=690320" target="_blank">Donnie Goth</a>, 
+        a cult-favorite webcomic that blends gothic humor with sharp character-driven storytelling.
+      </p>
+      <p>
+        With years of experience in independent comics, Ricardo has built a reputation for bold artistic style, 
+        atmospheric settings, and quirky characters. His works have been featured in interviews on 
+        <a href="https://webcomicoverlook.wordpress.com/2012/08/13/who-are-you-an-interview-with-ricardo-porven-donnie-goth/" target="_blank">The Webcomic Overlook</a> 
+        and <a href="https://www.shockya.com/news/2011/10/12/interview-meet-the-man-behind-the-goth-ricardo-porven-donnie-goths-master-mad-man/" target="_blank">Shockya</a>, 
+        where he discussed his inspirations and creative journey.
+      </p>
     </div>
+  </div>
+</section>
+
   </div>
 
   <script>
-    document.getElementById("menu-toggle").addEventListener("click", function() {
-      const menu = document.getElementById("dropdown-menu");
-      menu.style.display = (menu.style.display === "block") ? "none" : "block";
-    });
-    document.addEventListener("click", function(e) {
-      const menu = document.getElementById("dropdown-menu");
-      const toggle = document.getElementById("menu-toggle");
-      if (!menu.contains(e.target) && !toggle.contains(e.target)) {
-        menu.style.display = "none";
-      }
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('menu');
+    hamburger.addEventListener('click', () => {
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
     });
   </script>
 </body>
