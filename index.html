@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="authoring-tool" content="Adobe_Animate_CC">
@@ -13,7 +13,6 @@
     margin: 0;
     background: #000;
     overflow: hidden;
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   }
 
   #viewport {
@@ -28,7 +27,6 @@
     left: 50%;
     top: 0;
     transform: translateX(-50%);
-    will-change: width, height, transform;
   }
 
   #canvas, #dom_overlay_container {
@@ -38,51 +36,7 @@
   }
   #dom_overlay_container { pointer-events: none; overflow: hidden; }
 
-  @supports (padding: env(safe-area-inset-top)) {
-    #viewport { padding-top: env(safe-area-inset-top); }
-  }
-
-  /* --- Hamburger Menu --- */
-  .hamburger {
-    position: fixed;
-    top: 16px;
-    right: 16px;
-    width: 32px;
-    height: 26px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    cursor: pointer;
-    z-index: 1400;
-  }
-  .hamburger span {
-    display: block;
-    height: 4px;
-    background: #fff;
-    border-radius: 2px;
-  }
-
-  .menu {
-    display: none;
-    position: absolute;
-    top: 50px;
-    right: 16px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,.25);
-    z-index: 1399;
-    padding: 10px 0;
-  }
-  .menu a {
-    display: block;
-    padding: 10px 20px;
-    color: #333;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  .menu a:hover { background: #f0f0f0; }
-
-  /* --- Music toggle --- */
+  /* ---- Music toggle ---- */
   #music-toggle {
     position: fixed;
     bottom: 40px;
@@ -90,7 +44,6 @@
     z-index: 1300;
     background: none;
     border: none;
-    padding: 0;
     cursor: pointer;
     width: 36px;
     height: 36px;
@@ -99,7 +52,46 @@
     width: 100%;
     height: 100%;
     fill: #fff;
+  }
+
+  /* ---- Hamburger ---- */
+  .hamburger {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 32px;
+    height: 24px;
+    cursor: pointer;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .hamburger span {
     display: block;
+    height: 4px;
+    background: white;
+    border-radius: 2px;
+  }
+  .menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 15px;
+    background: white;
+    padding: 10px;
+    border-radius: 6px;
+    z-index: 2100;
+  }
+  .menu a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    padding: 6px 12px;
+    font-family: sans-serif;
+  }
+  .menu a:hover {
+    background: #eee;
   }
 </style>
 
@@ -107,8 +99,9 @@
 <script src="saguaroandWrenwebsite.js?1755556445635"></script>
 </head>
 <body onload="init();">
-  <!-- Hamburger -->
-  <div class="hamburger" id="hamburger">
+
+  <!-- Hamburger Menu -->
+  <div class="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </div>
   <div class="menu" id="menu">
@@ -117,7 +110,6 @@
     <a href="privacy.html">Privacy Policy</a>
   </div>
 
-  <!-- Main animation -->
   <div id="viewport">
     <div id="animation_container">
       <canvas id="canvas" width="1920" height="1080"></canvas>
@@ -125,27 +117,39 @@
     </div>
   </div>
 
-  <!-- KIT signup modal -->
+  <!-- KIT POPUP EMBED (Connect Button) -->
   <script async data-uid="bfe28e187a" src="https://saguaro-and-wren.kit.com/bfe28e187a/index.js"></script>
 
-  <!-- AnimateJS init -->
-  <script>
+  <!-- Background Music -->
+  <audio id="bg-audio" loop preload="auto">
+    <source src="assets/audio/sentimental-cinematic-loop-longing-road-compressed.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <button id="music-toggle" aria-label="Toggle music"></button>
+
+<script>
   var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
+
   function init() {
-    canvas               = document.getElementById("canvas");
-    anim_container       = document.getElementById("animation_container");
-    dom_overlay_container= document.getElementById("dom_overlay_container");
+    canvas = document.getElementById("canvas");
+    anim_container = document.getElementById("animation_container");
+    dom_overlay_container = document.getElementById("dom_overlay_container");
+
     var comp = AdobeAn.getComposition("5EB7B55DAEFF4DE0842EEF5E2BDFA162");
     var lib  = comp.getLibrary();
+
     var loader = new createjs.LoadQueue(false);
     loader.addEventListener("fileload", function(evt){ handleFileLoad(evt, comp); });
     loader.addEventListener("complete", function(evt){ handleComplete(evt, comp); });
     loader.loadManifest(lib.properties.manifest);
   }
+
   function handleFileLoad(evt, comp) {
     var images = comp.getImages();
     if (evt && evt.item.type === "image") images[evt.item.id] = evt.result;
   }
+
   function handleComplete(evt, comp) {
     var lib = comp.getLibrary();
     var ss  = comp.getSpriteSheet();
@@ -159,53 +163,47 @@
     }
     exportRoot = new lib.saguaroandWrenwebsite();
     stage = new lib.Stage(canvas);
+
     fnStartAnimation = function() {
       stage.addChild(exportRoot);
       createjs.Ticker.framerate = lib.properties.fps;
       createjs.Ticker.addEventListener("tick", stage);
     };
+
     AdobeAn.makeResponsive(true, 'both', true, 2, [canvas, anim_container, dom_overlay_container]);
     AdobeAn.compositionLoaded(lib.properties.id);
     fnStartAnimation();
   }
-  </script>
 
-  <!-- Music -->
-  <audio id="bg-audio" loop preload="auto" muted>
-    <source src="assets/audio/sentimental-cinematic-loop-longing-road-compressed.mp3" type="audio/mpeg">
-  </audio>
-  <button id="music-toggle" aria-label="Toggle music"></button>
+  // Hamburger toggle
+  function toggleMenu() {
+    document.getElementById("menu").style.display =
+      document.getElementById("menu").style.display === "block" ? "none" : "block";
+  }
 
-  <script>
-    const audio = document.getElementById('bg-audio');
-    const btn   = document.getElementById('music-toggle');
-    const speakerOn = `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/></svg>`;
-    const speakerOff = `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M19 3L3 19l1.5 1.5L20.5 4.5 19 3z"/></svg>`;
-    btn.innerHTML = speakerOff;
-    btn.addEventListener('click', () => {
-      if (audio.paused) {
-        audio.play();
-        btn.innerHTML = speakerOn;
-      } else {
-        audio.pause();
-        btn.innerHTML = speakerOff;
-      }
-    });
-  </script>
+  // Music controls
+  const audio = document.getElementById('bg-audio');
+  const btn   = document.getElementById('music-toggle');
+  const speakerOn = `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/></svg>`;
+  const speakerOff= `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M19 3L3 19l1.5 1.5L20.5 4.5 19 3z"/></svg>`;
 
-  <!-- Hamburger toggle -->
-  <script>
-    const hamburger = document.getElementById('hamburger');
-    const menu = document.getElementById('menu');
-    hamburger.addEventListener('click', () => {
-      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-    });
-    document.addEventListener('click', (e) => {
-      if (!hamburger.contains(e.target) && !menu.contains(e.target)) {
-        menu.style.display = 'none';
-      }
-    });
-  </script>
+  btn.innerHTML = speakerOff;
+
+  btn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      btn.innerHTML = speakerOn;
+    } else {
+      audio.pause();
+      btn.innerHTML = speakerOff;
+    }
+  });
+
+  // Unlock audio on first user click anywhere
+  document.body.addEventListener('click', () => {
+    if (audio.paused) audio.play();
+  }, { once: true });
+</script>
 
 </body>
 </html>
