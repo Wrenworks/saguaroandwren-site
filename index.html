@@ -41,6 +41,19 @@
   @supports (padding: env(safe-area-inset-top)) {
     #viewport { padding-top: env(safe-area-inset-top); }
   }
+
+  /* ---- Privacy link (bottom-left, plain white) ---- */
+  .privacy-link {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    z-index: 1200;
+    color: #fff;                 /* plain white as requested */
+    text-decoration: none;       /* keep plain */
+    font: 500 12px/1.2 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    letter-spacing: .2px;
+    opacity: 1;
+  }
 </style>
 
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
@@ -53,6 +66,9 @@
       <div id="dom_overlay_container"></div>
     </div>
   </div>
+
+  <!-- Plain white Privacy Policy link -->
+  <a class="privacy-link" href="privacy.html">Privacy Policy</a>
 
   <!-- KIT POPUP EMBED -->
   <script async data-uid="bfe28e187a" src="https://saguaro-and-wren.kit.com/bfe28e187a/index.js"></script>
@@ -170,7 +186,7 @@
     height: var(--sw-icon-size);
     display: inline-grid;
     place-items: center;
-    color: white;
+    color: white;               /* provides currentColor to inline SVGs */
     text-decoration: none;
   }
   .sw-icons svg { width: 22px; height: 22px; display: block; }
