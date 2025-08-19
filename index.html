@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="authoring-tool" content="Adobe_Animate_CC">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>saguaroandWrenwebsite</title>
+<title>Saguaro & Wren</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌵</text></svg>">
 
 <style>
@@ -41,7 +41,6 @@
     #viewport { padding-top: env(safe-area-inset-top); }
   }
 
-  /* ---- Privacy link (bottom-left, plain white) ---- */
   .privacy-link {
     position: fixed;
     left: 10px;
@@ -53,7 +52,7 @@
     letter-spacing: .2px;
   }
 
-  /* ---- Music toggle (speaker icon) ---- */
+  /* Music toggle (speaker icon) */
   #music-toggle {
     position: fixed;
     bottom: 40px;
@@ -73,49 +72,44 @@
     display: block;
   }
 
-  /* ---- Hamburger Menu ---- */
+  /* Hamburger Menu */
   .hamburger {
     position: fixed;
     top: 15px;
     right: 15px;
-    z-index: 1400;
-    cursor: pointer;
-    width: 30px;
+    z-index: 1500;
+    width: 28px;
     height: 22px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    cursor: pointer;
   }
-  .hamburger div {
-    width: 100%;
+  .hamburger span {
+    display: block;
     height: 4px;
-    background: white;
+    background: #fff;
     border-radius: 2px;
   }
-
   .menu {
-    position: fixed;
-    top: 0;
-    right: 0;
-    background: rgba(0,0,0,0.9);
-    width: 200px;
-    height: 100%;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-    z-index: 1399;
-    display: flex;
+    position: absolute;
+    top: 50px;
+    right: 15px;
+    background: #fff;
+    border-radius: 6px;
+    display: none;
     flex-direction: column;
-    padding: 60px 20px;
+    min-width: 140px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
   }
   .menu a {
-    color: white;
+    padding: 10px 15px;
     text-decoration: none;
-    font-size: 16px;
-    margin: 10px 0;
+    color: #333;
+    font: 500 14px/1.4 system-ui, sans-serif;
   }
-  .menu.open {
-    transform: translateX(0);
-  }
+  .menu a:hover { background: #eee; }
+  .menu.show { display: flex; }
 </style>
 
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
@@ -129,21 +123,18 @@
     </div>
   </div>
 
-  <!-- Privacy Policy link -->
-  <a class="privacy-link" href="privacy.html">Privacy Policy</a>
-
   <!-- Hamburger -->
   <div class="hamburger" id="hamburger">
-    <div></div>
-    <div></div>
-    <div></div>
+    <span></span><span></span><span></span>
   </div>
-
   <div class="menu" id="menu">
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
     <a href="privacy.html">Privacy Policy</a>
   </div>
+
+  <!-- Privacy Policy link -->
+  <a class="privacy-link" href="privacy.html">Privacy Policy</a>
 
   <!-- KIT POPUP EMBED -->
   <script async data-uid="bfe28e187a" src="https://saguaro-and-wren.kit.com/bfe28e187a/index.js"></script>
@@ -152,12 +143,12 @@
   var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
 
   function init() {
-    canvas               = document.getElementById("canvas");
-    anim_container       = document.getElementById("animation_container");
-    dom_overlay_container= document.getElementById("dom_overlay_container");
+    canvas = document.getElementById("canvas");
+    anim_container = document.getElementById("animation_container");
+    dom_overlay_container = document.getElementById("dom_overlay_container");
 
     var comp = AdobeAn.getComposition("5EB7B55DAEFF4DE0842EEF5E2BDFA162");
-    var lib  = comp.getLibrary();
+    var lib = comp.getLibrary();
 
     var loader = new createjs.LoadQueue(false);
     loader.addEventListener("fileload", function(evt){ handleFileLoad(evt, comp); });
@@ -195,18 +186,26 @@
     fnStartAnimation();
   }
 
-  // Hamburger menu toggle
+  // Hamburger toggle
   const hamburger = document.getElementById('hamburger');
   const menu = document.getElementById('menu');
   hamburger.addEventListener('click', () => {
-    menu.classList.toggle('open');
+    menu.classList.toggle('show');
+  });
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !menu.contains(e.target)) {
+      menu.classList.remove('show');
+    }
   });
   </script>
+
+<!-- === Floating Connect / Social Widget === -->
+<!-- Keep your full social widget code here (unchanged from the last working version) -->
+<!-- === /Floating Connect / Social Widget === -->
 
 <!-- === Background Music === -->
 <audio id="bg-audio" loop preload="auto" muted>
   <source src="assets/audio/sentimental-cinematic-loop-longing-road-compressed.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
 </audio>
 
 <button id="music-toggle" aria-label="Toggle music"></button>
@@ -215,16 +214,248 @@
   const audio = document.getElementById('bg-audio');
   const btn   = document.getElementById('music-toggle');
 
-  const speakerOn = `
-    <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/></svg>`;
-  const speakerOff = `
-    <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><line x1="19" y1="5" x2="5" y2="19" stroke="white" stroke-width="2"/></svg>`;
+  const speakerOn = `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/></svg>`;
+  const speakerOff = `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M19 3L3 19l1.5 1.5L20.5 4.5 19 3z"/></svg>`;
 
   btn.innerHTML = speakerOff;
 
   btn.addEventListener('click', () => {
     if (audio.paused) {
-      audio.muted = false;
+      audio.play();
+      btn.innerHTML = speakerOn;
+    } else {
+      audio.pause();
+      btn.innerHTML = speakerOff;
+    }
+  });
+</script>
+<!-- === /Background Music === -->
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="authoring-tool" content="Adobe_Animate_CC">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Saguaro & Wren</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌵</text></svg>">
+
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: #000;
+    overflow: hidden;
+  }
+
+  #viewport {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    overflow: hidden;
+  }
+
+  #animation_container {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    will-change: width, height, transform;
+  }
+
+  #canvas, #dom_overlay_container {
+    position: absolute;
+    left: 0; top: 0;
+    display: block;
+  }
+  #dom_overlay_container { pointer-events: none; overflow: hidden; }
+
+  @supports (padding: env(safe-area-inset-top)) {
+    #viewport { padding-top: env(safe-area-inset-top); }
+  }
+
+  .privacy-link {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    z-index: 1200;
+    color: #fff;
+    text-decoration: none;
+    font: 500 12px/1.2 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    letter-spacing: .2px;
+  }
+
+  /* Music toggle (speaker icon) */
+  #music-toggle {
+    position: fixed;
+    bottom: 40px;
+    left: 10px;
+    z-index: 1300;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
+  }
+  #music-toggle svg {
+    width: 100%;
+    height: 100%;
+    fill: #fff;
+    display: block;
+  }
+
+  /* Hamburger Menu */
+  .hamburger {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 1500;
+    width: 28px;
+    height: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  .hamburger span {
+    display: block;
+    height: 4px;
+    background: #fff;
+    border-radius: 2px;
+  }
+  .menu {
+    position: absolute;
+    top: 50px;
+    right: 15px;
+    background: #fff;
+    border-radius: 6px;
+    display: none;
+    flex-direction: column;
+    min-width: 140px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  }
+  .menu a {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    font: 500 14px/1.4 system-ui, sans-serif;
+  }
+  .menu a:hover { background: #eee; }
+  .menu.show { display: flex; }
+</style>
+
+<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+<script src="saguaroandWrenwebsite.js?1755556445635"></script>
+</head>
+<body onload="init();">
+  <div id="viewport">
+    <div id="animation_container">
+      <canvas id="canvas" width="1920" height="1080"></canvas>
+      <div id="dom_overlay_container"></div>
+    </div>
+  </div>
+
+  <!-- Hamburger -->
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="menu" id="menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy Policy</a>
+  </div>
+
+  <!-- Privacy Policy link -->
+  <a class="privacy-link" href="privacy.html">Privacy Policy</a>
+
+  <!-- KIT POPUP EMBED -->
+  <script async data-uid="bfe28e187a" src="https://saguaro-and-wren.kit.com/bfe28e187a/index.js"></script>
+
+  <script>
+  var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
+
+  function init() {
+    canvas = document.getElementById("canvas");
+    anim_container = document.getElementById("animation_container");
+    dom_overlay_container = document.getElementById("dom_overlay_container");
+
+    var comp = AdobeAn.getComposition("5EB7B55DAEFF4DE0842EEF5E2BDFA162");
+    var lib = comp.getLibrary();
+
+    var loader = new createjs.LoadQueue(false);
+    loader.addEventListener("fileload", function(evt){ handleFileLoad(evt, comp); });
+    loader.addEventListener("complete", function(evt){ handleComplete(evt, comp); });
+    loader.loadManifest(lib.properties.manifest);
+  }
+
+  function handleFileLoad(evt, comp) {
+    var images = comp.getImages();
+    if (evt && evt.item.type === "image") images[evt.item.id] = evt.result;
+  }
+
+  function handleComplete(evt, comp) {
+    var lib = comp.getLibrary();
+    var ss  = comp.getSpriteSheet();
+    var queue = evt.target;
+    var ssMetadata = lib.ssMetadata;
+    for (var i = 0; i < ssMetadata.length; i++) {
+      ss[ssMetadata[i].name] = new createjs.SpriteSheet({
+        images: [queue.getResult(ssMetadata[i].name)],
+        frames: ssMetadata[i].frames
+      });
+    }
+    exportRoot = new lib.saguaroandWrenwebsite();
+    stage = new lib.Stage(canvas);
+
+    fnStartAnimation = function() {
+      stage.addChild(exportRoot);
+      createjs.Ticker.framerate = lib.properties.fps;
+      createjs.Ticker.addEventListener("tick", stage);
+    };
+
+    AdobeAn.makeResponsive(true, 'both', true, 2, [canvas, anim_container, dom_overlay_container]);
+    AdobeAn.compositionLoaded(lib.properties.id);
+    fnStartAnimation();
+  }
+
+  // Hamburger toggle
+  const hamburger = document.getElementById('hamburger');
+  const menu = document.getElementById('menu');
+  hamburger.addEventListener('click', () => {
+    menu.classList.toggle('show');
+  });
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !menu.contains(e.target)) {
+      menu.classList.remove('show');
+    }
+  });
+  </script>
+
+<!-- === Floating Connect / Social Widget === -->
+<!-- Keep your full social widget code here (unchanged from the last working version) -->
+<!-- === /Floating Connect / Social Widget === -->
+
+<!-- === Background Music === -->
+<audio id="bg-audio" loop preload="auto" muted>
+  <source src="assets/audio/sentimental-cinematic-loop-longing-road-compressed.mp3" type="audio/mpeg">
+</audio>
+
+<button id="music-toggle" aria-label="Toggle music"></button>
+
+<script>
+  const audio = document.getElementById('bg-audio');
+  const btn   = document.getElementById('music-toggle');
+
+  const speakerOn = `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/></svg>`;
+  const speakerOff = `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M19 3L3 19l1.5 1.5L20.5 4.5 19 3z"/></svg>`;
+
+  btn.innerHTML = speakerOff;
+
+  btn.addEventListener('click', () => {
+    if (audio.paused) {
       audio.play();
       btn.innerHTML = speakerOn;
     } else {
