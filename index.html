@@ -47,18 +47,18 @@
     gap: 12px;
   }
 
-  #music-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
-  }
-  #music-toggle svg {
-    width: 100%;
-    height: 100%;
-    fill: #fff;
-  }
+ #music-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 34px;   /* bigger */
+  height: 34px;
+}
+#music-toggle svg {
+  width: 100%;
+  height: 100%;
+  fill: #fff;
+}
 
   .hamburger {
     width: 30px;
@@ -75,25 +75,26 @@
   }
 
   .dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 40px;
-    right: 0;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-  .dropdown-menu a {
-    display: block;
-    padding: 10px 18px;
-    color: #000;
-    text-decoration: none;
-    font: 600 14px system-ui, sans-serif;
-  }
-  .dropdown-menu a:hover {
-    background: #f0f0f0;
-  }
+  display: none;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  border-radius: 6px;
+  overflow: hidden;
+  min-width: 180px;   /* <-- wider so items don’t wrap */
+}
+.dropdown-menu a {
+  display: block;
+  padding: 10px 18px;
+  color: #000;
+  text-decoration: none;
+  font: 600 14px system-ui, sans-serif;
+}
+.dropdown-menu a:hover {
+  background: #f0f0f0;
+}
 </style>
 
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
