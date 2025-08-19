@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="authoring-tool" content="Adobe_Animate_CC">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>saguaroandWrenwebsite</title>
+<title>Saguaro & Wren</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌵</text></svg>">
 
 <style>
@@ -29,6 +29,7 @@
     transform: translateX(-50%);
     will-change: width, height, transform;
   }
+
   #canvas, #dom_overlay_container {
     position: absolute;
     left: 0; top: 0;
@@ -36,130 +37,99 @@
   }
   #dom_overlay_container { pointer-events: none; overflow: hidden; }
 
-  @supports (padding: env(safe-area-inset-top)) {
-    #viewport { padding-top: env(safe-area-inset-top); }
-  }
-
-  /* --- Header (hamburger + music toggle) --- */
+  /* Header container with logo + hamburger */
   header {
     position: fixed;
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    right: 15px;
     z-index: 2000;
     display: flex;
     align-items: center;
     gap: 10px;
   }
 
-  #music-toggle {
-    background: none;
-    border: none;
-    padding: 0;
+  header img {
+    height: 32px;
+    width: auto;
+    display: block;
+  }
+
+  /* Hamburger menu */
+  .hamburger {
+    display: inline-block;
     cursor: pointer;
     width: 28px;
-    height: 28px;
+    height: 22px;
+    position: relative;
+    z-index: 2100;
+  }
+  .hamburger span {
+    background: #fff;
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .hamburger span:nth-child(1) { top: 0; }
+  .hamburger span:nth-child(2) { top: 9px; }
+  .hamburger span:nth-child(3) { top: 18px; }
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg);
+    top: 9px;
+  }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg);
+    top: 9px;
+  }
+
+  /* Dropdown menu */
+  nav {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    display: none;
+    min-width: 180px; /* same width as privacy.html */
+  }
+  nav a {
+    display: block;
+    padding: 10px 16px;
+    font: 600 14px/1.2 system-ui, sans-serif;
+    color: #333;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  nav a:hover {
+    background: #eee;
+  }
+  nav.show { display: block; }
+
+  /* Music toggle */
+  #music-toggle {
+    margin-right: 10px;
+    width: 26px;
+    height: 26px;
+    background: none;
+    border: none;
+    cursor: pointer;
   }
   #music-toggle svg {
     width: 100%;
     height: 100%;
     fill: #fff;
-    display: block;
   }
-
-  .menu-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    width: 28px;
-    height: 28px;
-  }
-  .menu-toggle svg {
-    width: 100%;
-    height: 100%;
-    fill: #fff;
-  }
-
-  nav.menu {
-    display: none;
-    position: absolute;
-    top: 40px;
-    right: 0;
-    background: rgba(255,255,255,0.95);
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.25);
-  }
-  nav.menu a {
-    display: block;
-    padding: 10px 20px;
-    color: #222;
-    text-decoration: none;
-    font: 500 14px system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  }
-  nav.menu a:hover { background: #eee; }
-
-  /* --- Social widget reused --- */
-  :root {
-    --sw-gap: 10px;
-    --sw-btn-bg: #000;
-    --sw-btn-fg: #fff;
-    --sw-icon-size: 36px;
-    --sw-z: 1100;
-  }
-  #social-widget {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-    z-index: var(--sw-z);
-    pointer-events: none;
-  }
-  .sw-panel {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    pointer-events: auto;
-  }
-  .sw-trigger {
-    appearance: none;
-    border: 0;
-    cursor: pointer;
-    background: var(--sw-btn-bg);
-    color: var(--sw-btn-fg);
-    padding: 10px 14px;
-    border-radius: 999px;
-    font: 600 14px/1.1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  }
-  .sw-icons {
-    position: absolute;
-    bottom: 0;
-    right: calc(100% + 8px);
-    display: flex;
-    flex-direction: row-reverse;
-    gap: var(--sw-gap);
-    max-width: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: max-width .25s ease, opacity .2s ease;
-  }
-  .sw-panel[aria-expanded="true"] .sw-icons {
-    max-width: min(92vw, 560px);
-    opacity: 1;
-  }
-  .sw-icons a {
-    width: var(--sw-icon-size);
-    height: var(--sw-icon-size);
-    display: inline-grid;
-    place-items: center;
-    color: white;
-    text-decoration: none;
-  }
-  .sw-icons svg { width: 22px; height: 22px; display: block; }
 </style>
 
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
 <script src="saguaroandWrenwebsite.js"></script>
 </head>
 <body onload="init();">
+
   <div id="viewport">
     <div id="animation_container">
       <canvas id="canvas" width="1920" height="1080"></canvas>
@@ -167,86 +137,103 @@
     </div>
   </div>
 
-  <!-- Header -->
+  <!-- Header with hamburger + music -->
   <header>
-    <!-- Music toggle -->
     <button id="music-toggle" aria-label="Toggle music"></button>
-    <!-- Hamburger -->
-    <button class="menu-toggle" aria-label="Menu">
-      <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
-    </button>
-    <nav class="menu">
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="menu">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="privacy.html">Privacy Policy</a>
     </nav>
   </header>
 
-  <!-- Social Widget -->
-  <div id="social-widget" aria-live="polite">
-    <div class="sw-panel" aria-expanded="false">
-      <div class="sw-icons" role="group" aria-label="Connect on social">
-        <!-- Example: Email -->
-        <a href="mailto:saguaroandwren@gmail.com" aria-label="Email">
-          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M2 5h20v14H2V5zm2 2v10h16V7l-8 5L4 7z"/></svg>
-        </a>
-        <!-- Add the other social icons here (Bluesky, IG, FB, etc. from your last version) -->
-      </div>
-      <button class="sw-trigger" type="button" id="sw-trigger" aria-haspopup="true">Connect</button>
+  <!-- KIT popup -->
+  <script async data-uid="bfe28e187a" src="https://saguaro-and-wren.kit.com/bfe28e187a/index.js"></script>
+
+  <!-- Animation -->
+  <script>
+  var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
+  function init() {
+    canvas = document.getElementById("canvas");
+    anim_container = document.getElementById("animation_container");
+    dom_overlay_container = document.getElementById("dom_overlay_container");
+
+    var comp = AdobeAn.getComposition("5EB7B55DAEFF4DE0842EEF5E2BDFA162");
+    var lib = comp.getLibrary();
+    var loader = new createjs.LoadQueue(false);
+    loader.addEventListener("fileload", function(evt){ handleFileLoad(evt, comp); });
+    loader.addEventListener("complete", function(evt){ handleComplete(evt, comp); });
+    loader.loadManifest(lib.properties.manifest);
+  }
+  function handleFileLoad(evt, comp) {
+    var images = comp.getImages();
+    if (evt.item.type === "image") { images[evt.item.id] = evt.result; }
+  }
+  function handleComplete(evt, comp) {
+    var lib = comp.getLibrary();
+    var ss = comp.getSpriteSheet();
+    var queue = evt.target;
+    for (var i=0; i<lib.ssMetadata.length; i++) {
+      ss[lib.ssMetadata[i].name] = new createjs.SpriteSheet({
+        images: [queue.getResult(lib.ssMetadata[i].name)],
+        frames: lib.ssMetadata[i].frames
+      });
+    }
+    exportRoot = new lib.saguaroandWrenwebsite();
+    stage = new lib.Stage(canvas);
+    fnStartAnimation = function() {
+      stage.addChild(exportRoot);
+      createjs.Ticker.framerate = lib.properties.fps;
+      createjs.Ticker.addEventListener("tick", stage);
+    };
+    AdobeAn.makeResponsive(true,'both',true,2,[canvas,anim_container,dom_overlay_container]);
+    AdobeAn.compositionLoaded(lib.properties.id);
+    fnStartAnimation();
+  }
+  </script>
+
+  <!-- Social connect widget (restored) -->
+  <div id="social-widget" style="position:fixed;bottom:40px;right:40px;z-index:1500;">
+    <button style="background:black;color:white;padding:10px 14px;border-radius:999px;border:none;cursor:pointer;">Connect</button>
+    <div style="margin-top:10px;display:none;" id="social-links">
+      <a href="mailto:saguaroandwren@gmail.com" style="color:white;display:block;">Email</a>
+      <a href="https://bsky.app/profile/saguaroandwren.bsky.social" style="color:white;display:block;">Bluesky</a>
+      <a href="https://instagram.com/saguaroandwren" style="color:white;display:block;">Instagram</a>
+      <a href="https://www.facebook.com/share/1BcbZCB8XQ/?mibextid=wwXlfr" style="color:white;display:block;">Facebook</a>
+      <a href="https://www.threads.net/@saguaroandwren" style="color:white;display:block;">Threads</a>
+      <a href="https://x.com/saguaroandwren" style="color:white;display:block;">X</a>
+      <a href="https://pin.it/1NRoGETV6" style="color:white;display:block;">Pinterest</a>
+      <a href="https://www.webtoons.com/en/canvas/saguaro-wren/list?title_no=1078202" style="color:white;display:block;">Webtoon</a>
     </div>
   </div>
 
-  <!-- Background music -->
+  <!-- Background Music -->
   <audio id="bg-audio" loop preload="auto" muted>
     <source src="assets/audio/sentimental-cinematic-loop-longing-road-compressed.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    // Animate init
-    var canvas, stage, exportRoot, anim_container, dom_overlay_container;
-    function init() {
-      canvas = document.getElementById("canvas");
-      anim_container = document.getElementById("animation_container");
-      dom_overlay_container = document.getElementById("dom_overlay_container");
-      var comp = AdobeAn.getComposition("5EB7B55DAEFF4DE0842EEF5E2BDFA162");
-      var lib = comp.getLibrary();
-      var loader = new createjs.LoadQueue(false);
-      loader.addEventListener("fileload", e => handleFileLoad(e, comp));
-      loader.addEventListener("complete", e => handleComplete(e, comp));
-      loader.loadManifest(lib.properties.manifest);
-    }
-    function handleFileLoad(evt, comp) {
-      var images = comp.getImages();
-      if (evt.item.type === "image") images[evt.item.id] = evt.result;
-    }
-    function handleComplete(evt, comp) {
-      var lib = comp.getLibrary();
-      var ss  = comp.getSpriteSheet();
-      var queue = evt.target;
-      var ssMetadata = lib.ssMetadata;
-      for (var i=0;i<ssMetadata.length;i++) {
-        ss[ssMetadata[i].name] = new createjs.SpriteSheet({
-          images:[queue.getResult(ssMetadata[i].name)],
-          frames:ssMetadata[i].frames
-        });
-      }
-      exportRoot = new lib.saguaroandWrenwebsite();
-      stage = new lib.Stage(canvas);
-      createjs.Ticker.framerate = lib.properties.fps;
-      createjs.Ticker.addEventListener("tick", stage);
-      AdobeAn.makeResponsive(true, 'both', true, 2, [canvas, anim_container, dom_overlay_container]);
-      AdobeAn.compositionLoaded(lib.properties.id);
-    }
+    // Hamburger
+    const burger = document.getElementById('hamburger');
+    const menu = document.getElementById('menu');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('active');
+      menu.classList.toggle('show');
+    });
 
     // Music toggle
     const audio = document.getElementById('bg-audio');
-    const btn   = document.getElementById('music-toggle');
-    const speakerOn = `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M14 9.23v5.54c.58-.45 1-.99 1.26-1.54.26-.55.4-1.18.4-1.83s-.14-1.28-.4-1.83c-.26-.55-.68-1.09-1.26-1.54z"/></svg>`;
-    const speakerOff = `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M19 3L3 19l1.5 1.5L20.5 4.5 19 3z"/></svg>`;
+    const btn = document.getElementById('music-toggle');
+    const speakerOn = `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/></svg>`;
+    const speakerOff = `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><line x1="19" y1="5" x2="5" y2="19" stroke="white" stroke-width="2"/></svg>`;
     btn.innerHTML = speakerOff;
     btn.addEventListener('click', () => {
       if (audio.paused) {
-        audio.play(); audio.muted = false;
+        audio.muted = false;
+        audio.play();
         btn.innerHTML = speakerOn;
       } else {
         audio.pause();
@@ -254,19 +241,11 @@
       }
     });
 
-    // Hamburger
-    const menuBtn = document.querySelector('.menu-toggle');
-    const menu = document.querySelector('nav.menu');
-    menuBtn.addEventListener('click', () => {
-      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-    });
-
-    // Social widget toggle
-    const panel = document.querySelector('.sw-panel');
-    const trigger = document.getElementById('sw-trigger');
-    trigger.addEventListener('click', () => {
-      const open = panel.getAttribute('aria-expanded') === 'true';
-      panel.setAttribute('aria-expanded', !open);
+    // Connect button
+    const sw = document.querySelector('#social-widget button');
+    const sl = document.querySelector('#social-links');
+    sw.addEventListener('click', () => {
+      sl.style.display = sl.style.display === 'block' ? 'none' : 'block';
     });
   </script>
 </body>
