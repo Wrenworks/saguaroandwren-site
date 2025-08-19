@@ -10,8 +10,8 @@
   html, body {
     height: 100%;
     margin: 0;
-    background: #000;            /* base color behind the stage */
-    overflow: hidden;            /* no scrollbars when covering */
+    background: #000;
+    overflow: hidden;
   }
 
   /* Full-viewport backdrop that crops overflow */
@@ -22,8 +22,7 @@
     overflow: hidden;
   }
 
-  /* Animate resizes this element.
-     Center horizontally; pin to top so landscape doesn't crop the header. */
+  /* Animate centers horizontally; pinned to top */
   #animation_container {
     position: absolute;
     left: 50%;
@@ -44,7 +43,7 @@
     overflow: hidden;
   }
 
-  /* Optional fixed CTA if you want a manual trigger too (can remove) */
+  /* Optional manual trigger (remove if not needed) */
   #open-modal-btn{
     position: fixed;
     right: 1rem;
@@ -60,7 +59,6 @@
     font: 600 14px/1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   }
 
-  /* iOS safe-area notch padding for top-aligned layout (optional) */
   @supports (padding: env(safe-area-inset-top)) {
     #viewport { padding-top: env(safe-area-inset-top); }
   }
@@ -72,16 +70,15 @@
 <body onload="init();">
   <div id="viewport">
     <div id="animation_container">
-      <!-- Keep intrinsic stage size; AdobeAn scales it -->
       <canvas id="canvas" width="1920" height="1080"></canvas>
       <div id="dom_overlay_container"></div>
     </div>
   </div>
 
-  <!-- Optional manual trigger (delete if you don't want it) -->
+  <!-- Optional manual trigger -->
   <button id="open-modal-btn" type="button">Get Updates</button>
 
-  <!-- ====== KIT POPUP EMBED (your snippet) ====== -->
+  <!-- ====== KIT POPUP EMBED ====== -->
   <script async data-uid="bfe28e187a" src="https://saguaro-and-wren.kit.com/bfe28e187a/index.js"></script>
 
   <script>
@@ -127,40 +124,27 @@
       createjs.Ticker.addEventListener("tick", stage);
     };
 
-    // Responsive cover scaling: fill viewport & crop overflow
+    /* Fill viewport & crop overflow */
     AdobeAn.makeResponsive(true, 'both', true, 2, [canvas, anim_container, dom_overlay_container]);
 
     AdobeAn.compositionLoaded(lib.properties.id);
     fnStartAnimation();
-
-    /* ---------- (Optional) Pause when modal opens ----------
-    function pauseAnimate(p){ if (window.createjs && createjs.Ticker) createjs.Ticker.paused = !!p; }
-    const isVisible = el => el && el.offsetParent !== null && getComputedStyle(el).visibility !== 'hidden' && getComputedStyle(el).opacity !== '0' && getComputedStyle(el).display !== 'none';
-    const modalSelectors = ['.ck-modal','[data-ck-modal]','[id^="ck-"][role="dialog"]','iframe[src*="kit.com"]','iframe[src*="convertkit"]'];
-    function modalOpen(){ for (const sel of modalSelectors){ const el = document.querySelector(sel); if (isVisible(el)) return true; } return document.body.classList.contains('ck-modal-open'); }
-    const mo = new MutationObserver(() => { pauseAnimate(modalOpen()); });
-    mo.observe(document.body, { childList:true, subtree:true, attributes:true, attributeFilter:['class','style'] });
-    --------------------------------------------------------- */
   }
   </script>
 
-<!-- === Floating Connect / Social Widget (icons rise up) === -->
+<!-- === Floating Connect / Social Widget (portrait vertical; landscape horizontal-left) === -->
 <style>
   :root {
     --sw-gap: 10px;
-    --sw-pad: 10px;
-    --sw-radius: 14px;
-    --sw-bg: rgba(22,22,22,0.85);
-    --sw-btn-bg: #000;       /* black button */
+    --sw-btn-bg: #000;   /* black button */
     --sw-btn-fg: #fff;
     --sw-icon-size: 36px;
     --sw-z: 1100;
   }
 
-  /* Keep widget above animation but below modal */
   #social-widget {
     position: fixed;
-    inset: auto 0 16px 0;         /* bottom center by default (desktop) */
+    inset: auto 0 16px 0;             /* bottom center by default */
     display: flex;
     justify-content: center;
     z-index: var(--sw-z);
@@ -168,33 +152,31 @@
     padding-bottom: env(safe-area-inset-bottom, 0);
   }
 
-  /* Panel holds the button; icons are absolutely positioned and rise above it */
+  /* Transparent panel; no gray background */
   .sw-panel {
     position: relative;
     display: inline-flex;
     align-items: center;
     gap: var(--sw-gap);
-    background: var(--sw-bg);
-    backdrop-filter: blur(6px);
-    padding: var(--sw-pad);
-    border-radius: var(--sw-radius);
-    box-shadow: 0 10px 28px rgba(0,0,0,.35);
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
     pointer-events: auto;
   }
 
-  /* Main trigger button — black */
+  /* Button */
   .sw-trigger {
     appearance: none; border: 0; cursor: pointer;
     background: var(--sw-btn-bg); color: var(--sw-btn-fg);
     padding: 10px 14px; border-radius: 999px;
     font: 600 14px/1.1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-    box-shadow: 0 6px 16px rgba(0,0,0,.3);
   }
 
-  /* Icon list sits ABOVE the button, rising upward from it */
+  /* Default (portrait/desktop): vertical expansion centered above button */
   .sw-icons {
     position: absolute;
-    bottom: 100%;                 /* anchor right above the panel */
+    bottom: calc(100% + 8px);
     left: 50%;
     transform: translateX(-50%);
     display: grid;
@@ -202,22 +184,17 @@
     justify-items: center;
     gap: var(--sw-gap);
 
-    /* collapsed state */
-    max-height: 0;
+    max-height: 0;                     /* collapsed */
     opacity: 0;
     overflow: hidden;
     transition: max-height .25s ease, opacity .2s ease;
-    padding-bottom: 0;
   }
-
-  /* Expanded state: reveal vertically upward */
   .sw-panel[aria-expanded="true"] .sw-icons {
-    max-height: 480px;            /* tall enough to show all icons */
+    max-height: 520px;                 /* tall enough to reveal all icons */
     opacity: 1;
-    padding-bottom: var(--sw-gap);
   }
 
-  /* Plain white icons, no circles/boxes */
+  /* Icon visuals: plain white glyphs */
   .sw-icons a {
     width: var(--sw-icon-size);
     height: var(--sw-icon-size);
@@ -228,67 +205,118 @@
   }
   .sw-icons svg { width: 22px; height: 22px; display: block; }
 
-  /* Mobile portrait: bottom-right, still rise up from button */
-  @media (orientation: portrait), (max-width: 768px) {
+  /* Keep bottom-center on smaller portrait too */
+  @media (max-width: 768px) {
+    #social-widget { inset: auto 0 12px 0; }
+  }
+
+  /* === Landscape (short height): bottom-right button; icons expand left horizontally === */
+  @media (orientation: landscape) and (max-height: 560px) {
     #social-widget {
-      inset: auto 12px 12px auto; /* bottom-right */
+      inset: auto 10px 10px auto;   /* bottom-right with 10px margin */
       justify-content: flex-end;
     }
+
+    .sw-panel {
+      flex-direction: column-reverse; /* button at bottom, icons above */
+      align-items: flex-end;
+    }
+
     .sw-icons {
+      position: absolute;
+      bottom: calc(100% + 8px);  /* just above the button */
+      right: 0;                  /* align flush with button's right edge */
       left: auto;
-      right: 0;                   /* align with right edge of panel */
       transform: none;
+
+      display: flex;
+      flex-direction: row-reverse; /* expand leftward */
+      gap: 8px;
+
+      max-width: 0;               /* collapsed horizontally */
+      max-height: none;
+      opacity: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: max-width .25s ease, opacity .2s ease;
+    }
+    .sw-panel[aria-expanded="true"] .sw-icons {
+      max-width: min(92vw, 560px); /* expand horizontally to the left */
+      opacity: 1;
     }
   }
 
-  /* Hide Kit's floating trigger button if it appears */
-  .ck-fab,
-  .ck-floating,
-  .ck-float,
-  .ck-modal-btn,
-  .ck-modal-button,
-  .ck-open,
-  [class*="ck-"][class*="trigger"],
-  button[id^="ck-"][class*="open"] {
+  /* Aggressively hide Kit floating launcher buttons (but not the modal) */
+  .ck-fab, .ck_fab, .ck-floating, .ck-button--floating,
+  .formkit-sticky, .formkit-widget-sticky,
+  [class*="ck-"][class*="floating"],
+  [class*="ck-"][style*="position: fixed"],
+  a[href*="kit.com"][style*="position: fixed"],
+  button[style*="position: fixed"][class*="ck"] {
     display: none !important;
   }
 </style>
 
 <div id="social-widget" aria-live="polite">
   <div class="sw-panel" aria-expanded="false">
-    <!-- Icons rise out of the button (positioned absolutely above the panel) -->
+    <!-- Icons -->
     <div class="sw-icons" role="group" aria-label="Connect on social">
-      <!-- Bluesky -->
+      <!-- Bluesky (butterfly-style) -->
       <a href="https://bsky.app/profile/saguaroandwren.bsky.social" target="_blank" rel="noopener noreferrer" aria-label="Bluesky">
-        <svg viewBox="0 0 24 24"><path fill="white" d="M4 5c2.5 3 5 5 8 7 3-2 5.5-4 8-7-1 5-3 8-8 12C7 13 5 10 4 5z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="white" d="M12 12c-2.9-2.5-5.8-5.1-8.6-8C3.6 9.4 5.5 13 12 16.6 18.5 13 20.4 9.4 20.6 4c-2.8 2.9-5.7 5.5-8.6 8z"/>
+        </svg>
       </a>
+
       <!-- Threads (canonical) -->
       <a href="https://www.threads.net/@saguaroandwren" target="_blank" rel="noopener noreferrer" aria-label="Threads">
-        <svg viewBox="0 0 24 24"><path fill="white" d="M12 2c5.5 0 9 3.7 9 9.2 0 6-4.6 10.8-9.9 10.8C6.1 22 3 18.4 3 14.6c0-3.6 2.6-6 6.1-6 2.6 0 4.6 1.3 5.6 3.5h-2.3c-.6-1-1.6-1.6-3.2-1.6-2.2 0-3.7 1.5-3.7 3.7 0 2.5 2 4.8 5.1 4.8 3.4 0 5.9-2.5 5.9-6.2C16.5 7 14.9 5 12 5z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="white" d="M12 2c5.5 0 9 3.7 9 9.2 0 6-4.6 10.8-9.9 10.8C6.1 22 3 18.4 3 14.6c0-3.6 2.6-6 6.1-6 2.6 0 4.6 1.3 5.6 3.5h-2.3c-.6-1-1.6-1.6-3.2-1.6-2.2 0-3.7 1.5-3.7 3.7 0 2.5 2 4.8 5.1 4.8 3.4 0 5.9-2.5 5.9-6.2C16.5 7 14.9 5 12 5z"/>
+        </svg>
       </a>
+
       <!-- X / Twitter -->
       <a href="https://x.com/saguaroandwren" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
-        <svg viewBox="0 0 24 24"><path fill="white" d="M3 3l8.3 9.6L3.6 21h2.6l6.3-6.8L18.7 21H21l-8-9.6L20.6 3h-2.6l-6 6.5L7 3H3z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="white" d="M3 3l8.3 9.6L3.6 21h2.6l6.3-6.8L18.7 21H21l-8-9.6L20.6 3h-2.6l-6 6.5L7 3H3z"/>
+        </svg>
       </a>
-      <!-- Instagram (clean URL) -->
+
+      <!-- Instagram (outline, no fill) -->
       <a href="https://instagram.com/saguaroandwren" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-        <svg viewBox="0 0 24 24"><path fill="white" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5" ry="5" fill="none" stroke="white" stroke-width="2"/>
+          <circle cx="12" cy="12" r="4.5" fill="none" stroke="white" stroke-width="2"/>
+          <circle cx="17.5" cy="6.5" r="1.25" fill="white"/>
+        </svg>
       </a>
-      <!-- Facebook (your provided share URL; send a Page URL if you want a stable profile link) -->
+
+      <!-- Facebook (current share URL; provide Page URL if available) -->
       <a href="https://www.facebook.com/share/1BcbZCB8XQ/?mibextid=wwXlfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-        <svg viewBox="0 0 24 24"><path fill="white" d="M13 10h3l-.5 3H13v8h-3v-8H8v-3h2V8.5C10 6.6 11 5 13.8 5H16v3h-1.8c-.8 0-1.2.3-1.2 1.1V10z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="white" d="M13 10h3l-.5 3H13v8h-3v-8H8v-3h2V8.5C10 6.6 11 5 13.8 5H16v3h-1.8c-.8 0-1.2.3-1.2 1.1V10z"/>
+        </svg>
       </a>
-      <!-- Pinterest (shortlink you gave; a profile URL is more reliable if you have one) -->
+
+      <!-- Pinterest (shortlink; profile URL is more reliable if you want) -->
       <a href="https://pin.it/1NRoGETV6" target="_blank" rel="noopener noreferrer" aria-label="Pinterest">
-        <svg viewBox="0 0 24 24"><path fill="white" d="M12 2a10 10 0 0 0-3.5 19.4c-.1-.8-.2-2 0-2.9.2-.9 1.4-5.9 1.4-5.9s-.3-.6-.3-1.6c0-1.5.9-2.6 2-2.6.9 0 1.3.7 1.3 1.5 0 .9-.6 2.3-.9 3.6-.3 1.1.6 2 1.7 2 2.1 0 3.7-2.2 3.7-5.3 0-2.8-2-4.7-4.9-4.7-3.3 0-5.2 2.4-5.2 4.9 0 1 .4 2.1 1 2.7.1.1.1.2.1.3-.1.4-.3 1.1-.3 1.2-.1.2-.2.2-.4.1-1.5-.7-2.5-2.9-2.5-4.6 0-3.8 2.8-7.2 8-7.2 4.2 0 7.5 3 7.5 7.1 0 4.2-2.6 7.6-6.3 7.6-1.2 0-2.4-.6-2.8-1.3l-.8 3c-.3 1.1-1 2.4-1.5 3.2a10 10 0 1 0 3.7-19.3z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="white" d="M12 2a10 10 0 0 0-3.5 19.4c-.1-.8-.2-2 0-2.9.2-.9 1.4-5.9 1.4-5.9s-.3-.6-.3-1.6c0-1.5.9-2.6 2-2.6.9 0 1.3.7 1.3 1.5 0 .9-.6 2.3-.9 3.6-.3 1.1.6 2 1.7 2 2.1 0 3.7-2.2 3.7-5.3 0-2.8-2-4.7-4.9-4.7-3.3 0-5.2 2.4-5.2 4.9 0 1 .4 2.1 1 2.7.1.1.1.2.1.3-.1.4-.3 1.1-.3 1.2-.1.2-.2.2-.4.1-1.5-.7-2.5-2.9-2.5-4.6 0-3.8 2.8-7.2 8-7.2 4.2 0 7.5 3 7.5 7.1 0 4.2-2.6 7.6-6.3 7.6-1.2 0-2.4-.6-2.8-1.3l-.8 3c-.3 1.1-1 2.4-1.5 3.2a10 10 0 1 0 3.7-19.3z"/>
+        </svg>
       </a>
-      <!-- Webtoon -->
+
+      <!-- Webtoon (stylized W) -->
       <a href="https://www.webtoons.com/en/canvas/saguaro-wren/list?title_no=1078202" target="_blank" rel="noopener noreferrer" aria-label="Webtoon">
-        <svg viewBox="0 0 24 24"><path fill="white" d="M4 3h16a1 1 0 0 1 1 1v12l-5-3-4 4-4-4-5 3V4a1 1 0 0 1 1-1z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="white" d="M2 4h4l2.2 12L12 9.5 15.8 16 18 4h4l-3 16h-3.2L12 13.5 8.2 20H5L2 4z"/>
+        </svg>
       </a>
+
       <!-- Email -->
       <a href="mailto:saguaroandwren@gmail.com" aria-label="Email">
-        <svg viewBox="0 0 24 24"><path fill="white" d="M2 5h20v14H2V5zm2 2v10h16V7l-8 5L4 7z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="white" d="M2 5h20v14H2V5zm2 2v10h16V7l-8 5L4 7z"/>
+        </svg>
       </a>
     </div>
 
@@ -325,6 +353,24 @@
     document.addEventListener('click', (e) => {
       if (!panel.contains(e.target)) setExpanded(false);
     });
+
+    /* Extra safety: hide any tiny fixed bottom-right kit launcher that slips through */
+    const hideKitLaunchers = () => {
+      const nodes = document.querySelectorAll('a[href*="kit.com"], [class*="ck-"], [data-uid="bfe28e187a"]');
+      nodes.forEach(n => {
+        const cs = getComputedStyle(n);
+        const isFixed = cs.position === 'fixed';
+        const wh = n.getBoundingClientRect();
+        const nearBR = (wh.bottom > window.innerHeight - 120) && (wh.right > window.innerWidth - 120);
+        const small = wh.width <= 160 && wh.height <= 160;
+        // Avoid killing a large modal: only hide small, fixed, bottom-right launchers
+        if (isFixed && nearBR && small) n.style.display = 'none';
+      });
+    };
+    const mo = new MutationObserver(hideKitLaunchers);
+    mo.observe(document.body, { childList:true, subtree:true, attributes:true });
+    window.addEventListener('load', hideKitLaunchers);
+    setTimeout(hideKitLaunchers, 1200);
   })();
 </script>
 <!-- === /Floating Connect / Social Widget === -->
