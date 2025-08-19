@@ -29,47 +29,47 @@ lib.ssMetadata = [
 
 
 
-(lib.CachedBmp_9 = function() {
+(lib.CachedBmp_8 = function() {
 	this.initialize(ss["saguaroandWrenwebsite_atlas_3"]);
 	this.gotoAndStop(0);
 }).prototype = p = new cjs.Sprite();
 
 
 
-(lib.CachedBmp_8 = function() {
+(lib.CachedBmp_7 = function() {
 	this.initialize(ss["saguaroandWrenwebsite_atlas_3"]);
 	this.gotoAndStop(1);
 }).prototype = p = new cjs.Sprite();
 
 
 
-(lib.CachedBmp_7 = function() {
+(lib.CachedBmp_6 = function() {
 	this.initialize(ss["saguaroandWrenwebsite_atlas_2"]);
 	this.gotoAndStop(0);
 }).prototype = p = new cjs.Sprite();
 
 
 
-(lib.CachedBmp_6 = function() {
-	this.initialize(img.CachedBmp_6);
+(lib.CachedBmp_5 = function() {
+	this.initialize(img.CachedBmp_5);
 }).prototype = p = new cjs.Bitmap();
 p.nominalBounds = new cjs.Rectangle(0,0,2442,780);
 
 
-(lib.CachedBmp_5 = function() {
+(lib.CachedBmp_4 = function() {
 	this.initialize(ss["saguaroandWrenwebsite_atlas_3"]);
 	this.gotoAndStop(2);
 }).prototype = p = new cjs.Sprite();
 
 
 
-(lib.CachedBmp_4 = function() {
-	this.initialize(img.CachedBmp_4);
+(lib.CachedBmp_3 = function() {
+	this.initialize(img.CachedBmp_3);
 }).prototype = p = new cjs.Bitmap();
 p.nominalBounds = new cjs.Rectangle(0,0,1321,2111);
 
 
-(lib.CachedBmp_3 = function() {
+(lib.CachedBmp_2 = function() {
 	this.initialize(ss["saguaroandWrenwebsite_atlas_1"]);
 	this.gotoAndStop(0);
 }).prototype = p = new cjs.Sprite();
@@ -117,7 +117,7 @@ if (reversed == null) { reversed = false; }
 	cjs.MovieClip.apply(this,[props]);
 
 	// Layer_1
-	this.instance = new lib.CachedBmp_9();
+	this.instance = new lib.CachedBmp_8();
 	this.instance.setTransform(0,0,0.5,0.5);
 
 	this.timeline.addTween(cjs.Tween.get(this.instance).wait(1));
@@ -140,7 +140,7 @@ if (reversed == null) { reversed = false; }
 	cjs.MovieClip.apply(this,[props]);
 
 	// Layer_1
-	this.instance = new lib.CachedBmp_8();
+	this.instance = new lib.CachedBmp_7();
 	this.instance.setTransform(0,0,0.5,0.5);
 
 	this.timeline.addTween(cjs.Tween.get(this.instance).wait(1));
@@ -219,8 +219,8 @@ if (reversed == null) { reversed = false; }
 
 	// Layer_1
 	this.shape = new cjs.Shape();
-	this.shape.graphics.f("#FFFFFF").s().p("EA0iARQQgjgGgggfQgWgWgbgpQgdgsgOgZQgVgogHgjQgIgqAKgnQALgqAfgYQAdgYAoABQApAAAdAYQAUAQASAgIAcA4QAMAVAbApQAXAmAHAdQAHAegGAfQgGAfgTAXQgTAYgdAMQgUAIgVAAQgJAAgJgCgEA+vAPmQgggYgOgtQgMgnADgvQAFhPAmgzQAWgcAfgQQAhgRAiADQAUACAaAKIAsATIBEAbQAlASAPAbQAQAdgEA4QgFBDgZAeQgNAQgWANQgPAIgbALQhGAdgpAGQgOACgNAAQgyAAgjgbgEhCzgOhQgfgHgTgYQgSgXgBgeQgCgjAXgZQAYgbAjAAQAMAAAAgFQAeABAZAUQAYAVAGAdQAGAegOAcQgOAdgcANQgRAIgTAAQgLAAgLgDg");
-	this.shape.setTransform(434.5354,150.4614);
+	this.shape.graphics.f("#FFFFFF").s().p("AmMDgQgigHgggfQgWgVgcgqQgdgrgNgaQgVgogHgiQgJgqAKgnQAMgqAegYQAegXAoAAQAoAAAdAYQAUARASAfIAdA4QAMAWAbAoQAXAlAGAeQAHAegGAeQgGAfgSAYQgTAYgdALQgVAJgUAAQgJAAgKgCgAEBB2QgggZgOgsQgNgnAEguQAEhPAngzQAWgdAfgPQAhgRAhADQAUABAaAKIAtATIBDAbQAlATAPAaQAQAdgEA5QgFBBgZAfQgNAQgWAMQgPAJgbALQhGAdgpAFQgOACgMAAQgyAAgjgag");
+	this.shape.setTransform(810.3697,238.5139);
 
 	this.shape_1 = new cjs.Shape();
 	var sprImg_shape_1 = cjs.SpriteSheetUtils.extractFrame(ss["saguaroandWrenwebsite_atlas_3"],3);
@@ -233,7 +233,7 @@ if (reversed == null) { reversed = false; }
 
 	this._renderFirstFrame();
 
-}).prototype = getMCSymbolPrototype(lib.Symbol9, new cjs.Rectangle(0,0,1370.9,781), null);
+}).prototype = getMCSymbolPrototype(lib.Symbol9, new cjs.Rectangle(630.9,0,740.0000000000001,781), null);
 
 
 (lib.Symbol8 = function(mode,startPosition,loop,reversed) {
@@ -272,7 +272,7 @@ if (reversed == null) { reversed = false; }
 	cjs.MovieClip.apply(this,[props]);
 
 	// Layer_1
-	this.instance = new lib.CachedBmp_7();
+	this.instance = new lib.CachedBmp_6();
 	this.instance.setTransform(0,0,0.5,0.5);
 
 	this.timeline.addTween(cjs.Tween.get(this.instance).wait(1));
@@ -294,7 +294,7 @@ if (reversed == null) { reversed = false; }
 	cjs.MovieClip.apply(this,[props]);
 
 	// Layer_1
-	this.instance = new lib.CachedBmp_6();
+	this.instance = new lib.CachedBmp_5();
 	this.instance.setTransform(272.85,0,0.5,0.5);
 
 	this.timeline.addTween(cjs.Tween.get(this.instance).wait(1));
@@ -316,7 +316,7 @@ if (reversed == null) { reversed = false; }
 	cjs.MovieClip.apply(this,[props]);
 
 	// Layer_1
-	this.instance = new lib.CachedBmp_5();
+	this.instance = new lib.CachedBmp_4();
 	this.instance.setTransform(0,0,0.5,0.5);
 
 	this.timeline.addTween(cjs.Tween.get(this.instance).wait(1));
@@ -338,7 +338,7 @@ if (reversed == null) { reversed = false; }
 	cjs.MovieClip.apply(this,[props]);
 
 	// Layer_1
-	this.instance = new lib.CachedBmp_4();
+	this.instance = new lib.CachedBmp_3();
 	this.instance.setTransform(0,0,0.4625,0.4625);
 
 	this.timeline.addTween(cjs.Tween.get(this.instance).wait(1));
@@ -360,7 +360,7 @@ if (reversed == null) { reversed = false; }
 	cjs.MovieClip.apply(this,[props]);
 
 	// Layer_1
-	this.instance = new lib.CachedBmp_3();
+	this.instance = new lib.CachedBmp_2();
 	this.instance.setTransform(0,0,0.5,0.5);
 
 	this.timeline.addTween(cjs.Tween.get(this.instance).wait(1));
@@ -485,7 +485,7 @@ if (reversed == null) { reversed = false; }
 	this._renderFirstFrame();
 
 }).prototype = p = new cjs.MovieClip();
-p.nominalBounds = new cjs.Rectangle(-630.8,0,1370.8,781);
+p.nominalBounds = new cjs.Rectangle(0,0,740,781);
 
 
 (lib.Symbol6 = function(mode,startPosition,loop,reversed) {
@@ -558,7 +558,7 @@ if (reversed == null) { reversed = false; }
 	this._renderFirstFrame();
 
 }).prototype = p = new cjs.MovieClip();
-p.nominalBounds = new cjs.Rectangle(-630.8,0,1647.6999999999998,785.4);
+p.nominalBounds = new cjs.Rectangle(-16.9,0,1033.8,785.4);
 
 
 (lib.Wren = function(mode,startPosition,loop,reversed) {
@@ -592,7 +592,7 @@ if (reversed == null) { reversed = false; }
 	this._renderFirstFrame();
 
 }).prototype = p = new cjs.MovieClip();
-p.nominalBounds = new cjs.Rectangle(-630.9,0,1544.3,1009.5);
+p.nominalBounds = new cjs.Rectangle(-0.1,0,913.5,1009.5);
 
 
 // stage content:
@@ -736,12 +736,12 @@ lib.properties = {
 	color: "#FFFFFF",
 	opacity: 1.00,
 	manifest: [
-		{src:"images/CachedBmp_6.png?1755556445632", id:"CachedBmp_6"},
-		{src:"images/CachedBmp_4.png?1755556445632", id:"CachedBmp_4"},
-		{src:"images/CachedBmp_1.png?1755556445632", id:"CachedBmp_1"},
-		{src:"images/saguaroandWrenwebsite_atlas_1.png?1755556445619", id:"saguaroandWrenwebsite_atlas_1"},
-		{src:"images/saguaroandWrenwebsite_atlas_2.png?1755556445619", id:"saguaroandWrenwebsite_atlas_2"},
-		{src:"images/saguaroandWrenwebsite_atlas_3.png?1755556445619", id:"saguaroandWrenwebsite_atlas_3"}
+		{src:"images/CachedBmp_5.png", id:"CachedBmp_5"},
+		{src:"images/CachedBmp_4.png", id:"CachedBmp_3"},
+		{src:"images/CachedBmp_1.png", id:"CachedBmp_1"},
+		{src:"images/saguaroandWrenwebsite_atlas_1.png", id:"saguaroandWrenwebsite_atlas_1"},
+		{src:"images/saguaroandWrenwebsite_atlas_2.png", id:"saguaroandWrenwebsite_atlas_2"},
+		{src:"images/saguaroandWrenwebsite_atlas_3.png", id:"saguaroandWrenwebsite_atlas_3"}
 	],
 	preloads: []
 };
