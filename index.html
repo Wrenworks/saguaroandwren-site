@@ -102,7 +102,7 @@
 <script src="https://code.createjs.com/1.0.0/createjs.min.js" defer></script>
 <script src="saguaroandWrenwebsite.js" defer></script>
 </head>
-<body onload="init();">
+<body>
   <div id="viewport">
     <div id="animation_container">
       <canvas id="canvas" width="1920" height="1080"></canvas>
@@ -167,6 +167,9 @@
     });
     loader.loadManifest(lib.properties.manifest);
   }
+
+  // Call init after DOM + scripts are ready
+  document.addEventListener("DOMContentLoaded", init);
   </script>
 
 <!-- === Floating Connect / Social Widget === -->
