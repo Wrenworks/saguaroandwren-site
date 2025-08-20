@@ -207,7 +207,7 @@
     margin: auto !important;
     position: fixed !important;
     top: 50% !important;
-    left: calc(50% + 13px) !important;  /* shift right ~10px */
+    left: calc(50% + 14px) !important;  /* shift right ~10px */
     transform: translate(-50%, -50%) !important;
     border-radius: 12px !important;
     overflow: hidden !important;
@@ -219,13 +219,6 @@
   .formkit-form {
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
-  }
-
-  /* reduce space under image */
-  .formkit-popup img,
-  .convertkit-form img,
-  .formkit-form img {
-    margin-bottom: -12px !important;
   }
 
   /* prevent Safari zoom on inputs */
@@ -246,21 +239,6 @@
   }
 }
  @media (max-width: 768px) {
-  /* tighten headline spacing under the image */
-  .convertkit-form h1,
-  .convertkit-form h2,
-  .convertkit-form h3,
-  .formkit-form h1,
-  .formkit-form h2,
-  .formkit-form h3,
-  .formkit-popup h1,
-  .formkit-popup h2,
-  .formkit-popup h3 {
-    margin-top: -10px !important; /* pull headline up */
-    margin-bottom: 8px !important; /* keep space before inputs tighter */
-  }
-}
-    @media (max-width: 768px) {
   /* tighten headline spacing under the image */
   .convertkit-form h1,
   .convertkit-form h2,
