@@ -131,15 +131,17 @@
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
-    transform: translate(-50%, -50%) !important; /* center both ways */
-    width: 90% !important;       /* smaller than full width */
-    max-width: 400px !important; /* don’t stretch too wide */
-    max-height: 80% !important;  /* not full screen */
+    transform: translate(-50%, -50%) !important;
+    width: 90% !important;
+    max-width: 400px !important;
+    max-height: 80vh !important;   /* use viewport height so it never overflows */
     margin: 0 !important;
-    border-radius: 12px !important; 
-    overflow-y: auto !important; /* allow scroll if content too tall */
-    background: #fff !important; /* ensure background shows correctly */
+    border-radius: 12px !important;
+    overflow-y: auto !important;   /* scroll if needed */
+    background: #fff !important;
     z-index: 3000 !important;
+    padding: 16px !important;      /* adds breathing room inside */
+    box-sizing: border-box !important;
   }
 
   /* dim background but keep site visible */
@@ -161,8 +163,9 @@
   .convertkit-form button,
   .formkit-form button,
   .formkit-popup button {
-    padding: 8px 12px !important;
+    padding: 10px 14px !important; /* more comfortable */
     font-size: 14px !important;
+    border-radius: 6px !important; /* softer inputs/buttons */
   }
 
   .convertkit-form h1,
@@ -175,9 +178,10 @@
   .formkit-popup h2,
   .formkit-popup h3 {
     font-size: 16px !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 12px !important;
   }
 }
+
 
 
   </style>
