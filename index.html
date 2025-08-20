@@ -297,8 +297,18 @@
   <script>
     const audio = document.getElementById('bg-audio');
     const btn = document.getElementById('music-toggle');
-    const speakerOn = <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M14 9.23v5.54c.58-.45 1-.99 1.26-1.54.26-.55.4-1.18.4-1.83s-.14-1.28-.4-1.83c-.26-.55-.68-1.09-1.26-1.54z"/></svg>;
-    const speakerOff = <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M19 3L3 19l1.5 1.5L20.5 4.5 19 3z"/></svg>;
+      const speakerOn = `
+    <svg viewBox="0 0 24 24">
+      <path d="M4 9v6h4l5 5V4L8 9H4z"/>
+      <path d="M14 9.23v5.54c.58-.45 1-.99 1.26-1.54.26-.55.4-1.18.4-1.83s-.14-1.28-.4-1.83c-.26-.55-.68-1.09-1.26-1.54z"/>
+    </svg>`;
+
+  const speakerOff = `
+    <svg viewBox="0 0 24 24">
+      <path d="M4 9v6h4l5 5V4L8 9H4z"/>
+      <path d="M19 3L3 19l1.5 1.5L20.5 4.5 19 3z"/>
+    </svg>`;
+
     btn.innerHTML = speakerOff;
     btn.addEventListener('click', () => {
       if(audio.paused){ audio.play(); btn.innerHTML = speakerOn; }
