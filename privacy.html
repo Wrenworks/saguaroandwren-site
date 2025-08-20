@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy – Saguaro & Wren</title>
-  <link rel="stylesheet" href="styles.css">
 
   <style>
     body {
@@ -80,19 +79,17 @@
     /* === PRIVACY CONTENT CONTAINER === */
     .content-container {
       max-width: 800px;
-      margin: 80px auto 40px auto; /* leaves space for header */
+      margin: 80px auto 40px auto; /* default desktop margins */
       padding: 20px;
-      background: rgba(255, 255, 255, 0.9); /* only here, no stray box */
+      background: rgba(255, 255, 255, 0.9); 
       border-radius: 12px;
     }
 
     @media (max-width: 768px) {
-  .container {
-    margin: 80px 15px 20px 15px; /* Top 80px, left/right 15px, bottom 20px */
-  }
-}
-
-
+      .content-container {
+        margin: 80px 15px 20px 15px; /* proper margins on mobile */
+      }
+    }
 
     h1 {
       font-size: 1.8rem;
@@ -109,9 +106,6 @@
       line-height: 1.6;
       margin-bottom: 1rem;
     }
-      .container {
-        margin: 80px 15px 20px 15px;
-      }
   </style>
 </head>
 <body>
