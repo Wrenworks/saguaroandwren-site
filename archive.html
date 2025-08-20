@@ -97,6 +97,13 @@
       display: block;
     }
 
+    /* Desktop cursor */
+    @media (min-width: 769px) {
+      .grid img {
+        cursor: pointer;
+      }
+    }
+
     .caption {
       padding: 10px;
       font-size: 0.9rem;
@@ -116,6 +123,23 @@
       h1 {
         font-size: 1.5rem;
       }
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    .lightbox img {
+      max-width: 95%;
+      max-height: 95%;
+      border-radius: 8px;
     }
   </style>
 </head>
@@ -137,6 +161,11 @@
   <div class="container">
     <h1>Comic Strip Archive</h1>
     <div class="grid" id="archiveGrid"></div>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox">
+    <img id="lightbox-img" src="" alt="Full Comic Strip">
   </div>
 
   <script>
@@ -166,6 +195,30 @@
             </div>
           `;
           grid.appendChild(div);
+        });
+
+        // Lightbox setup
+        const imgs = document.querySelectorAll("#archiveGrid img");
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+
+        imgs.forEach(img => {
+          img.addEventListener("click", () => {
+            if (window.innerWidth > 768) { // desktop only
+              lightboxImg.src = img.src;
+              lightbox.style.display = "flex";
+            }
+          });
+        });
+
+        // Close on click or ESC
+        lightbox.addEventListener("click", () => {
+          lightbox.style.display = "none";
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            lightbox.style.display = "none";
+          }
         });
       } catch (err) {
         console.error("Error loading strips.json", err);
