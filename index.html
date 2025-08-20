@@ -15,10 +15,6 @@
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌵</text></svg>">
 
-  <!-- Libraries -->
-  <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-  <script src="saguaroandWrenwebsite.js"></script>
-
   <style>
     html, body {
       height: 100%;
@@ -26,7 +22,7 @@
       background: #000;
       overflow: hidden;
     }
-    
+
     #loading-screen {
       position: fixed;
       inset: 0;
@@ -37,6 +33,12 @@
       justify-content: center;
       font: 600 20px system-ui, sans-serif;
       z-index: 2000;
+      opacity: 1;
+      transition: opacity 0.4s ease;
+    }
+    #loading-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
     }
 
     #viewport {
@@ -131,9 +133,7 @@
 </head>
 
 <body onload="init();">
-  <div id="loading-screen">
-    🌵 Loading...
-  </div>
+  <div id="loading-screen">🌵 Loading...</div>
 
   <div id="viewport">
     <div id="animation_container">
@@ -143,7 +143,7 @@
   </div>
 
   <!-- Audio -->
-  <audio id="bg-audio" loop preload="auto">
+  <audio id="bg-audio" loop preload="none">
     <source src="assets/audio/sentimental-cinematic-loop-longing-road-compressed.mp3" type="audio/mpeg">
   </audio>
 
@@ -175,7 +175,6 @@
       var comp = AdobeAn.getComposition("5EB7B55DAEFF4DE0842EEF5E2BDFA162");
       var lib = comp.getLibrary();
 
-      // ✅ preload + load images
       var loader = new createjs.LoadQueue(false);
       loader.setMaxConnections(10);
       loader.loadManifest(lib.properties.manifest, true);
@@ -203,18 +202,13 @@
         AdobeAn.makeResponsive(true,'both',true,2,[canvas,anim_container,dom_overlay_container]);
         AdobeAn.compositionLoaded(lib.properties.id);
         fnStartAnimation();
-
-        // ✅ Hide loading overlay once everything is ready
-        document.getElementById("loading-screen").style.display = "none";
+        // hide loading screen with fade
+        document.getElementById("loading-screen").classList.add("hidden");
       });
     }
   </script>
 
-  <!-- === Floating Connect / Social Widget === -->
-  <!-- (unchanged, left intact) -->
-  <!-- === /Floating Connect / Social Widget === -->
-
-  <!-- === Background Music === -->
+  <!-- === Background Music Toggle === -->
   <script>
     const audio = document.getElementById('bg-audio');
     const btn = document.getElementById('music-toggle');
@@ -238,6 +232,9 @@
         document.getElementById('dropdown-menu').style.display==='block'?'none':'block';
     });
   </script>
-  <!-- === /Background Music === -->
+
+  <!-- CreateJS -->
+  <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+  <script src="saguaroandWrenwebsite.js"></script>
 </body>
 </html>
