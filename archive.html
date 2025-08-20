@@ -3,166 +3,177 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Saguaro & Wren – Archive</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌵</text></svg>">
+  <title>Saguaro & Wren - Archive</title>
+  <link rel="icon" href="assets/images/SaguaroWren-vector_logo-row.png" type="image/png">
   <style>
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      background: url('assets/images/desertbsackground_day.jpg') no-repeat center center fixed;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: url("assets/images/desertbsackground_day.jpg") no-repeat center center fixed;
       background-size: cover;
-      color: #222;
     }
 
-    /* --- Header --- */
+    /* Header */
     header {
       position: fixed;
-      top: 0; right: 0; left: 0;
+      top: 0;
+      right: 0;
+      width: 100%;
       display: flex;
       justify-content: flex-end;
       align-items: center;
       padding: 10px 15px;
+      background: transparent;
       z-index: 1000;
     }
-    header img.logo {
+
+    header img {
       height: 40px;
       margin-right: 10px;
     }
-    .hamburger {
+
+    /* Hamburger menu */
+    .menu-toggle {
       font-size: 28px;
-      cursor: pointer;
-      color: white;
       background: none;
       border: none;
+      color: #fff;
+      cursor: pointer;
     }
 
-    /* --- Dropdown menu --- */
-    .dropdown {
-      position: relative;
-    }
-    .dropdown-content {
+    nav {
       display: none;
       position: absolute;
-      right: 0;
-      top: 40px;
+      top: 50px;
+      right: 15px;
       background: #fff;
-      min-width: 160px;
       border-radius: 6px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
-    .dropdown-content a {
+
+    nav a {
       display: block;
-      padding: 10px 14px;
-      color: #222;
+      padding: 10px 15px;
+      color: #000;
       text-decoration: none;
       font-weight: 600;
     }
-    .dropdown-content a:hover {
+
+    nav a:hover {
       background: #f0f0f0;
     }
-    .show { display: block; }
 
-    /* --- Main container --- */
+    /* Page container */
     .container {
-      max-width: 1100px;
-      margin: 90px auto 40px auto;
+      max-width: 1200px;
+      margin: 100px auto 40px;
+      padding: 15px;
       background: rgba(255, 255, 255, 0.9);
       border-radius: 12px;
-      padding: 20px;
     }
+
     h1 {
       text-align: center;
       font-size: 2rem;
       margin-bottom: 20px;
     }
 
-    /* --- Grid layout for strips --- */
+    /* Grid */
     .grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
       gap: 20px;
     }
+
+    .grid div {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
     .grid img {
       width: 100%;
       height: auto;
       display: block;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    }
-    .caption {
-      font-size: 0.9rem;
-      text-align: center;
-      margin-top: 6px;
-      color: #444;
     }
 
-    /* --- Mobile adjustments --- */
-    @media (max-width: 768px) {
+    .caption {
+      padding: 10px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    @media (max-width: 600px) {
       .container {
-        margin: 80px 15px 30px 15px;
+        margin: 80px 15px 20px;
       }
-      .grid {
-        grid-template-columns: 1fr;
+      header img {
+        height: 32px;
+      }
+      .menu-toggle {
+        font-size: 24px;
       }
     }
   </style>
 </head>
 <body>
+
   <!-- Header -->
   <header>
-    <img src="assets/images/SaguaroWren-vector_logo-row.png" alt="Saguaro & Wren" class="logo">
-    <div class="dropdown">
-      <button onclick="toggleMenu()" class="hamburger">☰</button>
-      <div id="menu" class="dropdown-content">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="archive.html">Archive</a>
-      </div>
-    </div>
+    <img src="assets/images/SaguaroWren-vector_logo-row.png" alt="Saguaro & Wren Logo">
+    <button class="menu-toggle">☰</button>
+    <nav id="dropdown">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="archive.html">Archive</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </nav>
   </header>
 
-  <!-- Content -->
+  <!-- Main content -->
   <div class="container">
-    <h1>Comic Archive</h1>
-    <div class="grid">
-      <!-- Episode 4 -->
-      <div>
-        <img src="assets/images/Saguaro-and-Wren---Episode_4-Hot-Sands.jpg" alt="Hot Sands">
-        <div class="caption">Episode 4 – Hot Sands (8/22/25)</div>
-      </div>
-      <!-- Episode 3 -->
-      <div>
-        <img src="assets/images/SaguaroandWren-HeatStroke.jpg" alt="Heat Stroke">
-        <div class="caption">Episode 3 – Heat Stroke (8/15/25)</div>
-      </div>
-      <!-- Episode 2 -->
-      <div>
-        <img src="assets/images/SaguaroAndWren-TumbleweedTrouble.jpg" alt="Tumbleweed Trouble">
-        <div class="caption">Episode 2 – Tumbleweed Trouble (8/8/25)</div>
-      </div>
-      <!-- Episode 1 -->
-      <div>
-        <img src="assets/images/SaguaroandWren_Morning-Routine.jpg" alt="Morning Routine">
-        <div class="caption">Episode 1 – Morning Routine (8/1/25)</div>
-      </div>
-    </div>
+    <h1>Comic Strip Archive</h1>
+    <div class="grid" id="archiveGrid"></div>
   </div>
 
   <script>
-    function toggleMenu() {
-      document.getElementById("menu").classList.toggle("show");
-    }
-    window.onclick = function(e) {
-      if (!e.target.matches('.hamburger')) {
-        let dropdowns = document.getElementsByClassName("dropdown-content");
-        for (let i = 0; i < dropdowns.length; i++) {
-          if (dropdowns[i].classList.contains('show')) {
-            dropdowns[i].classList.remove('show');
-          }
-        }
+    // Toggle hamburger menu
+    const menuBtn = document.querySelector('.menu-toggle');
+    const dropdown = document.getElementById('dropdown');
+    menuBtn.addEventListener('click', () => {
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Load strips from JSON
+    async function loadArchive() {
+      try {
+        const response = await fetch("assets/data/strips.json");
+        const strips = await response.json();
+        const grid = document.getElementById("archiveGrid");
+
+        // Sort newest first
+        strips.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        strips.forEach(strip => {
+          const div = document.createElement("div");
+          div.innerHTML = `
+            <img src="${strip.file}" alt="${strip.title}">
+            <div class="caption">
+              Episode ${strip.episode} – ${strip.title}<br>
+              <small>${new Date(strip.date).toLocaleDateString()}</small>
+            </div>
+          `;
+          grid.appendChild(div);
+        });
+      } catch (err) {
+        console.error("Error loading strips.json", err);
       }
     }
+
+    loadArchive();
   </script>
+
 </body>
 </html>
