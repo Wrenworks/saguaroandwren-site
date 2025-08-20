@@ -123,19 +123,23 @@
     .dropdown-menu a:hover {
       background: #f0f0f0;
     }
-    /* === Override KIT popup sizing & style on mobile === */
+/* === Override KIT popup sizing & style on mobile === */
 @media (max-width: 768px) {
   .convertkit-form,
   .formkit-form,
   .formkit-popup {
-    max-width: 90% !important;   /* keep it smaller */
-    max-height: 80% !important;  /* not full screen */
-    margin: auto !important;
-    top: 10% !important;
+    position: fixed !important;
+    top: 50% !important;
     left: 50% !important;
-    transform: translateX(-50%) !important;
-    border-radius: 12px !important;  /* softer look */
-    overflow: hidden !important;
+    transform: translate(-50%, -50%) !important; /* center both ways */
+    width: 90% !important;       /* smaller than full width */
+    max-width: 400px !important; /* don’t stretch too wide */
+    max-height: 80% !important;  /* not full screen */
+    margin: 0 !important;
+    border-radius: 12px !important; 
+    overflow-y: auto !important; /* allow scroll if content too tall */
+    background: #fff !important; /* ensure background shows correctly */
+    z-index: 3000 !important;
   }
 
   /* dim background but keep site visible */
@@ -147,7 +151,7 @@
   .convertkit-form *,
   .formkit-form *,
   .formkit-popup * {
-    font-size: 14px !important;   /* slightly smaller text */
+    font-size: 14px !important;
     line-height: 1.4 !important;
   }
 
@@ -157,7 +161,7 @@
   .convertkit-form button,
   .formkit-form button,
   .formkit-popup button {
-    padding: 8px 12px !important;   /* smaller padding */
+    padding: 8px 12px !important;
     font-size: 14px !important;
   }
 
@@ -170,10 +174,11 @@
   .formkit-popup h1,
   .formkit-popup h2,
   .formkit-popup h3 {
-    font-size: 16px !important;     /* smaller heading */
+    font-size: 16px !important;
     margin-bottom: 10px !important;
   }
 }
+
 
   </style>
 </head>
