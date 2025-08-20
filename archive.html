@@ -3,145 +3,118 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Strip Archive - Saguaro & Wren</title>
-  <link rel="stylesheet" href="styles.css">
-
+  <title>Saguaro & Wren - Archive</title>
+  <link rel="icon" href="assets/images/SaguaroWren-vector_logo-row.png" type="image/png">
   <style>
     body {
       margin: 0;
-      font-family: system-ui, sans-serif;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
       background: url("assets/images/desertbsackground_day.jpg") no-repeat center center fixed;
       background-size: cover;
     }
 
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 10px 15px;
+      background: transparent;
+      z-index: 1000;
+    }
+
+    header img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    /* Hamburger menu */
+    .menu-toggle {
+      font-size: 28px;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    nav {
+      display: none;
+      position: absolute;
+      top: 50px;
+      right: 15px;
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    nav a {
+      display: block;
+      padding: 10px 15px;
+      color: #000;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      background: #f0f0f0;
+    }
+
+    /* Page container */
     .container {
-      max-width: 1100px;
-      margin: 80px auto 40px;
-      padding: 20px;
+      max-width: 1200px;
+      margin: 100px auto 40px;
+      padding: 15px;
       background: rgba(255, 255, 255, 0.9);
       border-radius: 12px;
     }
 
     h1 {
-      font-size: 1.8rem; /* smaller title */
       text-align: center;
-      margin-bottom: 30px;
+      font-size: 2rem;
+      margin-bottom: 20px;
     }
 
+    /* Grid */
     .grid {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
       gap: 20px;
     }
 
-    @media (min-width: 768px) {
-      .grid {
-        grid-template-columns: 1fr 1fr; /* lock at 2-column */
-      }
-    }
-
-    .strip {
-      background: white;
-      border-radius: 10px;
+    .grid div {
+      background: #fff;
+      border-radius: 8px;
       overflow: hidden;
-      padding: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       text-align: center;
     }
 
-    .strip img {
+    .grid img {
       width: 100%;
       height: auto;
-      cursor: pointer;
-      border-radius: 6px;
-      transition: transform 0.2s ease;
-    }
-    .strip img:hover {
-      transform: scale(1.02);
+      display: block;
     }
 
-    .meta {
+    .caption {
+      padding: 10px;
       font-size: 0.9rem;
-      margin: 10px 0;
-      color: #444;
-    }
-
-    .share-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 8px;
-    }
-
-    .share-buttons a {
-      text-decoration: none;
-      font-size: 0.9rem;
-      color: #5c5f0e;
-      font-weight: bold;
-    }
-
-    /* Lightbox */
-    .lightbox {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.9);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-    .lightbox img {
-      max-width: 95%;
-      max-height: 95%;
-    }
-    .lightbox:target {
-      display: flex;
-    }
-
-    /* Header styles match About/Home */
-    header {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 10px 20px;
-      background: transparent;
-      z-index: 1000;
-    }
-    header img {
-      height: 40px;
-      margin-right: auto;
-    }
-    #hamburger {
-      font-size: 28px;
-      cursor: pointer;
-      color: white;
-      background: none;
-      border: none;
-    }
-    nav {
-      position: absolute;
-      top: 60px;
-      right: 20px;
-      background: white;
-      border-radius: 8px;
-      display: none;
-      flex-direction: column;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    }
-    nav a {
-      padding: 10px 20px;
-      color: black;
-      text-decoration: none;
       font-weight: 500;
     }
-    nav a:hover {
-      background: #f0f0f0;
-    }
-    nav.show {
-      display: flex;
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 80px 15px 20px;
+      }
+      header img {
+        height: 32px;
+      }
+      .menu-toggle {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
@@ -150,70 +123,57 @@
   <!-- Header -->
   <header>
     <img src="assets/images/SaguaroWren-vector_logo-row.png" alt="Saguaro & Wren Logo">
-    <button id="hamburger">☰</button>
+    <button class="menu-toggle">☰</button>
     <nav id="dropdown">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
-      <a href="archive.html">Strip Archive</a>
+      <a href="archive.html">Archive</a>
       <a href="privacy.html">Privacy Policy</a>
     </nav>
   </header>
 
-  <!-- Main Container -->
+  <!-- Main content -->
   <div class="container">
-    <h1>Strip Archive</h1>
-    <div class="grid" id="archive-grid"></div>
-  </div>
-
-  <!-- Lightbox -->
-  <div id="lightbox" class="lightbox">
-    <img id="lightbox-img" src="" alt="Comic Strip">
+    <h1>Comic Strip Archive</h1>
+    <div class="grid" id="archiveGrid"></div>
   </div>
 
   <script>
     // Toggle hamburger menu
-    const hamburger = document.getElementById("hamburger");
-    const dropdown = document.getElementById("dropdown");
-    hamburger.addEventListener("click", () => {
-      dropdown.classList.toggle("show");
+    const menuBtn = document.querySelector('.menu-toggle');
+    const dropdown = document.getElementById('dropdown');
+    menuBtn.addEventListener('click', () => {
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
     });
 
     // Load strips from JSON
-    fetch("strips.json")
-      .then(res => res.json())
-      .then(strips => {
-        const grid = document.getElementById("archive-grid");
+    async function loadArchive() {
+      try {
+        const response = await fetch("assets/data/strips.json");
+        const strips = await response.json();
+        const grid = document.getElementById("archiveGrid");
+
+        // Sort newest first
+        strips.sort((a, b) => new Date(b.date) - new Date(a.date));
+
         strips.forEach(strip => {
           const div = document.createElement("div");
-          div.className = "strip";
           div.innerHTML = `
-            <img src="${strip.image}" alt="${strip.title}" data-full="${strip.image}">
-            <div class="meta"><strong>${strip.title}</strong><br>${strip.date}</div>
-            <div class="share-buttons">
-              <a href="https://twitter.com/intent/tweet?url=${window.location.href}&text=${encodeURIComponent(strip.title)}" target="_blank">Twitter</a>
-              <a href="https://www.facebook.com/sharer/sharer.php?u=${window.location.href}" target="_blank">Facebook</a>
-              <a href="https://www.pinterest.com/pin/create/button/?url=${window.location.href}&media=${strip.image}&description=${encodeURIComponent(strip.title)}" target="_blank">Pin It</a>
+            <img src="${strip.file}" alt="${strip.title}">
+            <div class="caption">
+              Episode ${strip.episode} – ${strip.title}<br>
+              <small>${new Date(strip.date).toLocaleDateString()}</small>
             </div>
           `;
           grid.appendChild(div);
         });
+      } catch (err) {
+        console.error("Error loading strips.json", err);
+      }
+    }
 
-        // Lightbox functionality
-        const imgs = document.querySelectorAll(".strip img");
-        const lightbox = document.getElementById("lightbox");
-        const lightboxImg = document.getElementById("lightbox-img");
-
-        imgs.forEach(img => {
-          img.addEventListener("click", () => {
-            lightboxImg.src = img.dataset.full;
-            lightbox.style.display = "flex";
-          });
-        });
-
-        lightbox.addEventListener("click", () => {
-          lightbox.style.display = "none";
-        });
-      });
+    loadArchive();
   </script>
+
 </body>
 </html>
