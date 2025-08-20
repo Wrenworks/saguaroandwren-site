@@ -8,104 +8,98 @@
   <style>
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background: url("assets/images/desertbsackground_day.jpg") no-repeat center center fixed;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: url('assets/images/desertbsackground_day.jpg') no-repeat center center fixed;
       background-size: cover;
+      color: #222;
     }
 
-    /* --- Header (logo + hamburger) --- */
+    /* --- Header --- */
     header {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
+      top: 0; right: 0; left: 0;
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      padding: 12px 18px;
+      padding: 10px 15px;
       z-index: 1000;
     }
     header img.logo {
       height: 40px;
-      margin-right: auto;
+      margin-right: 10px;
     }
-    .menu-toggle {
+    .hamburger {
+      font-size: 28px;
+      cursor: pointer;
+      color: white;
       background: none;
       border: none;
-      cursor: pointer;
-      padding: 8px;
-      z-index: 1100;
-    }
-    .menu-toggle svg {
-      width: 28px;
-      height: 28px;
-      fill: #fff;
     }
 
-    /* --- Dropdown Menu --- */
-    nav {
-      position: absolute;
-      top: 60px;
-      right: 18px;
-      background: white;
-      border-radius: 6px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      display: none;
-      flex-direction: column;
-      min-width: 180px;
-      z-index: 1000;
+    /* --- Dropdown menu --- */
+    .dropdown {
+      position: relative;
     }
-    nav a {
-      padding: 10px 16px;
-      color: #000;
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 40px;
+      background: #fff;
+      min-width: 160px;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .dropdown-content a {
+      display: block;
+      padding: 10px 14px;
+      color: #222;
       text-decoration: none;
       font-weight: 600;
     }
-    nav a:hover {
-      background: #f2f2f2;
+    .dropdown-content a:hover {
+      background: #f0f0f0;
     }
-    nav.show {
-      display: flex;
-    }
+    .show { display: block; }
 
-    /* --- Page Content --- */
+    /* --- Main container --- */
     .container {
-      max-width: 1000px;
-      margin: 100px auto 40px auto;
-      background: rgba(255,255,255,0.92);
+      max-width: 1100px;
+      margin: 90px auto 40px auto;
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 12px;
       padding: 20px;
     }
     h1 {
       text-align: center;
+      font-size: 2rem;
       margin-bottom: 20px;
     }
+
+    /* --- Grid layout for strips --- */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
-    .strip {
-      background: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      text-align: center;
-    }
-    .strip img {
+    .grid img {
       width: 100%;
-      height: auto; /* keeps original proportions */
+      height: auto;
       display: block;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
-    .strip h2 {
-      margin: 10px;
-      font-size: 16px;
+    .caption {
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 6px;
+      color: #444;
     }
 
-    /* --- Mobile tweaks --- */
-    @media (max-width: 600px) {
+    /* --- Mobile adjustments --- */
+    @media (max-width: 768px) {
       .container {
-        margin: 80px 15px;
+        margin: 80px 15px 30px 15px;
       }
       .grid {
         grid-template-columns: 1fr;
@@ -114,52 +108,61 @@
   </style>
 </head>
 <body>
-
   <!-- Header -->
   <header>
     <img src="assets/images/SaguaroWren-vector_logo-row.png" alt="Saguaro & Wren" class="logo">
-    <button class="menu-toggle" aria-label="Toggle menu">
-      <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
-    </button>
-    <nav id="menu">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="archive.html">Archive</a>
-      <a href="privacy.html">Privacy Policy</a>
-    </nav>
+    <div class="dropdown">
+      <button onclick="toggleMenu()" class="hamburger">☰</button>
+      <div id="menu" class="dropdown-content">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="archive.html">Archive</a>
+      </div>
+    </div>
   </header>
 
-  <!-- Archive Content -->
+  <!-- Content -->
   <div class="container">
-    <h1>Archive</h1>
-    <div class="grid" id="archive-grid"></div>
+    <h1>Comic Archive</h1>
+    <div class="grid">
+      <!-- Episode 4 -->
+      <div>
+        <img src="assets/images/Saguaro-and-Wren---Episode_4-Hot-Sands.jpg" alt="Hot Sands">
+        <div class="caption">Episode 4 – Hot Sands (8/22/25)</div>
+      </div>
+      <!-- Episode 3 -->
+      <div>
+        <img src="assets/images/SaguaroandWren-HeatStroke.jpg" alt="Heat Stroke">
+        <div class="caption">Episode 3 – Heat Stroke (8/15/25)</div>
+      </div>
+      <!-- Episode 2 -->
+      <div>
+        <img src="assets/images/SaguaroAndWren-TumbleweedTrouble.jpg" alt="Tumbleweed Trouble">
+        <div class="caption">Episode 2 – Tumbleweed Trouble (8/8/25)</div>
+      </div>
+      <!-- Episode 1 -->
+      <div>
+        <img src="assets/images/SaguaroandWren_Morning-Routine.jpg" alt="Morning Routine">
+        <div class="caption">Episode 1 – Morning Routine (8/1/25)</div>
+      </div>
+    </div>
   </div>
 
   <script>
-    // --- Hamburger toggle ---
-    const menuToggle = document.querySelector('.menu-toggle');
-    const menu = document.getElementById('menu');
-    menuToggle.addEventListener('click', () => {
-      menu.classList.toggle('show');
-    });
-
-    // --- Load strips from JSON ---
-    fetch('assets/strips.json')
-      .then(res => res.json())
-      .then(data => {
-        const grid = document.getElementById('archive-grid');
-        data.forEach(strip => {
-          const div = document.createElement('div');
-          div.className = 'strip';
-          div.innerHTML = `
-            <img src="${strip.image}" alt="${strip.title}">
-            <h2>${strip.title}</h2>
-          `;
-          grid.appendChild(div);
-        });
-      })
-      .catch(err => console.error('Error loading strips:', err));
+    function toggleMenu() {
+      document.getElementById("menu").classList.toggle("show");
+    }
+    window.onclick = function(e) {
+      if (!e.target.matches('.hamburger')) {
+        let dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+          if (dropdowns[i].classList.contains('show')) {
+            dropdowns[i].classList.remove('show');
+          }
+        }
+      }
+    }
   </script>
-
 </body>
 </html>
