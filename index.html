@@ -253,6 +253,22 @@
     margin-bottom: 8px !important; /* keep space before inputs tighter */
   }
 }
+@media (max-width: 768px) {
+  #dom_overlay_container {
+    pointer-events: none !important; /* double enforce */
+  }
+
+  .site-header {
+    position: fixed;
+    z-index: 9999 !important;  /* way above canvas + overlay */
+    pointer-events: auto !important;
+  }
+
+  .dropdown-menu {
+    z-index: 9998 !important;
+    position: absolute;
+  }
+}
 
  </style>
 </head>
