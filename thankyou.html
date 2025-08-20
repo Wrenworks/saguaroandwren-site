@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You – Saguaro & Wren</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌵</text></svg>">
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: url("assets/images/desertbackground.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: #2b2b2b;
+    }
+
+    /* Header (same as About/Archive style) */
+    .header {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      z-index: 1500;
+    }
+
+    .header img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .menu-toggle {
+      font-size: 28px;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .menu {
+      display: none;
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      overflow: hidden;
+      min-width: 180px;
+      font: 500 14px system-ui, sans-serif;
+    }
+
+    .menu a {
+      display: block;
+      padding: 12px 16px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .menu a:hover {
+      background: #f0f0f0;
+    }
+
+    /* Main content container */
+    .container {
+      max-width: 1000px;
+      margin: 100px auto 40px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #197b30;
+    }
+
+    p {
+      text-align: center;
+      line-height: 1.6;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+
+    /* Wallpaper grid */
+    .wallpaper-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .wallpaper {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: center;
+      padding: 10px;
+    }
+
+    .wallpaper img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .download-links {
+      margin-top: 8px;
+    }
+
+    .download-links a {
+      background: #197b30;
+      color: #fff;
+      padding: 6px 12px;
+      margin: 0 4px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .download-links a:hover {
+      background: #145a23;
+    }
+
+    /* Back to home button */
+    .back-home {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .back-home a {
+      display: inline-block;
+      background: #c69c6d;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-home a:hover {
+      background: #a87e51;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 80px 15px 20px;
+        padding: 20px;
+      }
+      h1 {
+        font-size: 1.6rem;
+      }
+      p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <img src="assets/images/SaguaroWren-vector_logo-row.png" alt="Saguaro & Wren Logo">
+    <button class="menu-toggle">☰</button>
+    <div class="menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="archive.html">Strip Archive</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+
+  <!-- Thank You Content -->
+  <div class="container">
+    <h1>🌵 Thanks for Joining the Flock! 🐦</h1>
+    <p>
+      Wren is already singing your praises, and Saguaro is standing tall with pride—<br>
+      you’ve officially joined the <em>Saguaro & Wren</em> community!  
+      <br><br>
+      As a special thank-you, we’ve put together some exclusive wallpapers just for you.  
+      Whether you’re on desktop or mobile, take a little desert magic wherever you go.  
+    </p>
+
+    <!-- Wallpaper Grid -->
+    <div class="wallpaper-grid">
+      <!-- Wallpaper 1 -->
+      <div class="wallpaper">
+        <img src="assets/images/saguaroandwren-wallpaper1-desktop.jpg" alt="Wallpaper 1 Preview">
+        <div class="download-links">
+          <a href="assets/images/saguaroandwren-wallpaper1-desktop.jpg" download>Desktop</a>
+          <a href="assets/images/saguaroandwren-wallpaper1-mobile.jpg" download>Mobile</a>
+        </div>
+      </div>
+      <!-- Wallpaper 2 -->
+      <div class="wallpaper">
+        <img src="assets/images/saguaroandwren-wallpaper2-desktop.jpg" alt="Wallpaper 2 Preview">
+        <div class="download-links">
+          <a href="assets/images/saguaroandwren-wallpaper2-desktop.jpg" download>Desktop</a>
+          <a href="assets/images/saguaroandwren-wallpaper2-mobile.jpg" download>Mobile</a>
+        </div>
+      </div>
+      <!-- Wallpaper 3 -->
+      <div class="wallpaper">
+        <img src="assets/images/saguaroandwren-wallpaper3-desktop.jpg" alt="Wallpaper 3 Preview">
+        <div class="download-links">
+          <a href="assets/images/saguaroandwren-wallpaper3-desktop.jpg" download>Desktop</a>
+          <a href="assets/images/saguaroandwren-wallpaper3-mobile.jpg" download>Mobile</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back to Home -->
+    <div class="back-home">
+      <a href="index.html">← Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    // Toggle hamburger menu
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      const menu = document.querySelector('.menu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    });
+  </script>
+
+</body>
+</html>
