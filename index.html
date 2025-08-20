@@ -164,7 +164,7 @@
       // ✅ fix: tell CreateJS to look in /images/
       var loader = new createjs.LoadQueue(false);
       loader.setMaxConnections(10);
-      loader.loadManifest(lib.properties.manifest, true, "images/");
+      loader.loadManifest(lib.properties.manifest, true);
 
       loader.addEventListener("fileload", function(evt) {
         if (evt.item.type === "image") comp.getImages()[evt.item.id] = evt.result;
