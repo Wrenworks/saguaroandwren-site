@@ -89,6 +89,7 @@
       overflow: hidden;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       text-align: center;
+      padding-bottom: 10px;
     }
 
     .grid img {
@@ -108,6 +109,24 @@
       padding: 10px;
       font-size: 0.9rem;
       font-weight: 500;
+    }
+
+    .share-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .share-buttons a {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #5c5f0e;
+      text-decoration: none;
+    }
+
+    .share-buttons a:hover {
+      text-decoration: underline;
     }
 
     @media (max-width: 600px) {
@@ -187,11 +206,20 @@
 
         strips.forEach(strip => {
           const div = document.createElement("div");
+          const pageUrl = encodeURIComponent(window.location.href);
+          const title = encodeURIComponent(strip.title);
+          const media = encodeURIComponent(strip.file);
+
           div.innerHTML = `
             <img src="${strip.file}" alt="${strip.title}">
             <div class="caption">
               Episode ${strip.episode} – ${strip.title}<br>
               <small>${new Date(strip.date).toLocaleDateString()}</small>
+            </div>
+            <div class="share-buttons">
+              <a href="https://twitter.com/intent/tweet?url=${pageUrl}&text=${title}" target="_blank">Twitter</a>
+              <a href="https://www.facebook.com/sharer/sharer.php?u=${pageUrl}" target="_blank">Facebook</a>
+              <a href="https://www.pinterest.com/pin/create/button/?url=${pageUrl}&media=${media}&description=${title}" target="_blank">Pin It</a>
             </div>
           `;
           grid.appendChild(div);
