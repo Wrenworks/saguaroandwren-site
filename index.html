@@ -16,261 +16,208 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌵</text></svg>">
 
   <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      background: #000;
-      overflow: hidden;
-    }
-
-    #loading-screen {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font: 600 20px system-ui, sans-serif;
-      z-index: 2000;
-    }
-
-    #viewport {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      overflow: hidden;
-    }
-
-    #animation_container {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      transform: translateX(-50%);
-    }
-
-    #canvas, #dom_overlay_container {
-      position: absolute;
-      left: 0;
-      top: 0;
-      display: block;
-    }
-
-    #dom_overlay_container {
-      pointer-events: none;
-    }
-
-    /* Header (hamburger + music toggle) */
-    .site-header {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      display: flex;
-      align-items: center;
-      z-index: 1500;
-      gap: 12px;
-    }
-
-    #music-toggle {
-      background: none;
-      border: none;
-      cursor: pointer;
-      width: 38px;
-      height: 38px;
-    }
-
-    #music-toggle svg {
-      width: 100%;
-      height: 100%;
-      fill: #fff;
-    }
-
-    .hamburger {
-      width: 30px;
-      height: 22px;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .hamburger span {
-      height: 4px;
-      background: #fff;
-      border-radius: 2px;
-    }
-
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      top: 40px;
-      right: 0;
-      background: #fff;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-      border-radius: 6px;
-      overflow: hidden;
-      min-width: 180px;
-    }
-
-    .dropdown-menu a {
-      display: block;
-      padding: 10px 18px;
-      color: #000;
-      text-decoration: none;
-      font: 500 14px system-ui, sans-serif;
-    }
-
-    .dropdown-menu a:hover {
-      background: #f0f0f0;
-    }
-@media (max-width: 768px) {
-  .formkit-overlay {
-    display: flex !important;
-    align-items: center !important;      /* vertical center */
-    justify-content: center !important;  /* horizontal center */
-    padding: 20px !important;
-    background: rgba(0,0,0,0.6) !important;
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: #000;
+    overflow: hidden;
   }
 
-  .convertkit-form,
-  .formkit-form,
-  .formkit-popup {
-    width: 85% !important;
-    max-width: 360px !important;     /* a touch smaller */
-    max-height: 70vh !important;
-    margin: auto !important;
-    border-radius: 12px !important;
-    overflow-y: auto !important;
-    background: #fff !important;
-    padding: 16px !important;
-    box-sizing: border-box !important;
-
-    /* remove injected offsets */
-    position: relative !important;
-    left: auto !important;
-    right: auto !important;
-    transform: none !important;
-
-    /* shift to right by 35px */
-    margin-left: 35px !important;
+  #loading-screen {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: 600 20px system-ui, sans-serif;
+    z-index: 2000;
   }
 
-  /* Make inner content shrink properly */
-  .convertkit-form *,
-  .formkit-form *,
-  .formkit-popup * {
-    max-width: 100% !important;
-    box-sizing: border-box !important;
+  #viewport {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    overflow: hidden;
   }
 
-  .convertkit-form img,
-  .formkit-form img,
-  .formkit-popup img {
-    max-width: 100% !important;
-    height: auto !important;
-    display: block !important;
+  #animation_container {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
   }
 
-  .convertkit-form input,
-  .formkit-form input,
-  .formkit-popup input,
-  .convertkit-form button,
-  .formkit-form button,
-  .formkit-popup button {
-    width: 100% !important;        /* ✅ full width */
-    padding: 10px 14px !important;
-    font-size: 14px !important;
-    margin: 6px 0 !important;
+  #canvas, #dom_overlay_container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
   }
 
-  .convertkit-form h1,
-  .convertkit-form h2,
-  .convertkit-form h3,
-  .formkit-form h1,
-  .formkit-form h2,
-  .formkit-form h3,
-  .formkit-popup h1,
-  .formkit-popup h2,
-  .formkit-popup h3 {
-    font-size: 18px !important;
-    margin-bottom: 10px !important;
-    line-height: 1.1 !important;
-  }
-}
-/* === Mobile popup fixes === */
-@media (max-width: 768px) {
-  .convertkit-form,
-  .formkit-form,
-  .formkit-popup {
-    max-width: 90% !important;
-    max-height: 85% !important;   /* slightly shorter */
-    margin: auto !important;
-    position: fixed !important;
-    top: 50% !important;
-    left: calc(50%) !important;  /* shift right ~10px */
-    transform: translate(-50%, -50%) !important;
-    border-radius: 12px !important;
-    overflow: hidden !important;
-  }
-
-  /* allow scrolling if content gets cut off */
-  .formkit-popup,
-  .convertkit-form,
-  .formkit-form {
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-  }
-
-  /* prevent Safari zoom on inputs */
-  .convertkit-form input,
-  .formkit-form input,
-  .formkit-popup input,
-  .convertkit-form textarea,
-  .formkit-form textarea,
-  .formkit-popup textarea {
-    font-size: 18px !important;
-  }
-}
-/* Hide the ConvertKit close "X" button */
-@media (max-width: 768px) {
-  .formkit-close,
-  .convertkit-close {
-    display: none !important;
-  }
-}
- @media (max-width: 768px) {
-  /* tighten headline spacing under the image */
-  .convertkit-form h1,
-  .convertkit-form h2,
-  .convertkit-form h3,
-  .formkit-form h1,
-  .formkit-form h2,
-  .formkit-form h3,
-  .formkit-popup h1,
-  .formkit-popup h2,
-  .formkit-popup h3 {
-    margin-top: -10px !important; /* pull headline up */
-    margin-bottom: 8px !important; /* keep space before inputs tighter */
-  }
-}
-@media (max-width: 768px) {
   #dom_overlay_container {
-    pointer-events: none !important; /* double enforce */
+    pointer-events: none;
   }
 
+  /* Header (hamburger + music toggle) */
   .site-header {
     position: fixed;
-    z-index: 9999 !important;  /* way above canvas + overlay */
-    pointer-events: auto !important;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    z-index: 1500;
+    gap: 12px;
+  }
+
+  #music-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 38px;
+    height: 38px;
+  }
+
+  #music-toggle svg {
+    width: 100%;
+    height: 100%;
+    fill: #fff;
+  }
+
+  .hamburger {
+    width: 30px;
+    height: 22px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .hamburger span {
+    height: 4px;
+    background: #fff;
+    border-radius: 2px;
   }
 
   .dropdown-menu {
-    z-index: 9998 !important;
+    display: none;
     position: absolute;
+    top: 40px;
+    right: 0;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    border-radius: 6px;
+    overflow: hidden;
+    min-width: 180px;
   }
-}
 
- </style>
+  .dropdown-menu a {
+    display: block;
+    padding: 10px 18px;
+    color: #000;
+    text-decoration: none;
+    font: 500 14px system-ui, sans-serif;
+  }
+
+  .dropdown-menu a:hover {
+    background: #f0f0f0;
+  }
+
+  /* === Mobile popup fixes === */
+  @media (max-width: 768px) {
+    .formkit-overlay {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 20px !important;
+      background: rgba(0,0,0,0.6) !important;
+    }
+
+    /* 🚑 Fix: ensure hidden overlays never block taps */
+    .formkit-overlay[hidden],
+    .formkit-overlay[style*="display: none"] {
+      display: none !important;
+      pointer-events: none !important;
+    }
+
+    .convertkit-form,
+    .formkit-form,
+    .formkit-popup {
+      width: 85% !important;
+      max-width: 360px !important;
+      max-height: 70vh !important;
+      margin: auto !important;
+      border-radius: 12px !important;
+      overflow-y: auto !important;
+      background: #fff !important;
+      padding: 16px !important;
+      box-sizing: border-box !important;
+
+      position: relative !important;
+      left: auto !important;
+      right: auto !important;
+      transform: none !important;
+
+      margin-left: 35px !important;
+    }
+
+    .convertkit-form *,
+    .formkit-form *,
+    .formkit-popup * {
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    .convertkit-form img,
+    .formkit-form img,
+    .formkit-popup img {
+      max-width: 100% !important;
+      height: auto !important;
+      display: block !important;
+    }
+
+    .convertkit-form input,
+    .formkit-form input,
+    .formkit-popup input,
+    .convertkit-form button,
+    .formkit-form button,
+    .formkit-popup button {
+      width: 100% !important;
+      padding: 10px 14px !important;
+      font-size: 14px !important;
+      margin: 6px 0 !important;
+    }
+
+    .convertkit-form h1,
+    .convertkit-form h2,
+    .convertkit-form h3,
+    .formkit-form h1,
+    .formkit-form h2,
+    .formkit-form h3,
+    .formkit-popup h1,
+    .formkit-popup h2,
+    .formkit-popup h3 {
+      font-size: 18px !important;
+      margin-top: -10px !important; /* headline tighter */
+      margin-bottom: 8px !important;
+      line-height: 1.1 !important;
+    }
+
+    /* ✅ Header stays above modal always */
+    .site-header {
+      position: fixed;
+      z-index: 99999 !important;
+      pointer-events: auto !important;
+    }
+
+    .dropdown-menu {
+      z-index: 99998 !important;
+      position: absolute;
+    }
+  }
+</style>
+
 </head>
 
 <body onload="init();">
