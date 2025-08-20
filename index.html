@@ -197,6 +197,47 @@
     line-height: 1.3 !important;
   }
 }
+/* === Mobile popup fixes === */
+@media (max-width: 768px) {
+  .convertkit-form,
+  .formkit-form,
+  .formkit-popup {
+    max-width: 90% !important;
+    max-height: 75% !important;   /* slightly shorter */
+    margin: auto !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: calc(50% + 5px) !important;  /* shift right ~10px */
+    transform: translate(-50%, -50%) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+  }
+
+  /* allow scrolling if content gets cut off */
+  .formkit-popup,
+  .convertkit-form,
+  .formkit-form {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* reduce space under image */
+  .formkit-popup img,
+  .convertkit-form img,
+  .formkit-form img {
+    margin-bottom: 8px !important;
+  }
+
+  /* prevent Safari zoom on inputs */
+  .convertkit-form input,
+  .formkit-form input,
+  .formkit-popup input,
+  .convertkit-form textarea,
+  .formkit-form textarea,
+  .formkit-popup textarea {
+    font-size: 16px !important;
+  }
+}
 
   </style>
 </head>
