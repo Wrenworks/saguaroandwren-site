@@ -111,17 +111,29 @@
       font-weight: 500;
     }
 
+    /* Share box */
     .share-buttons {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 12px;
-      margin-top: 6px;
+      margin: 8px auto 0;
+      padding: 8px 10px;
+      background: #197b30;
+      border-radius: 6px;
+      max-width: 280px;
+    }
+
+    .share-buttons span {
+      color: #c69c6d;
+      font-weight: bold;
+      margin-right: 8px;
     }
 
     .share-buttons a {
       font-size: 0.85rem;
       font-weight: 600;
-      color: #5c5f0e;
+      color: #ffffff;
       text-decoration: none;
     }
 
@@ -217,6 +229,7 @@
               <small>${new Date(strip.date).toLocaleDateString()}</small>
             </div>
             <div class="share-buttons">
+              <span>SHARE:</span>
               <a href="https://twitter.com/intent/tweet?url=${pageUrl}&text=${title}" target="_blank">Twitter</a>
               <a href="https://www.facebook.com/sharer/sharer.php?u=${pageUrl}" target="_blank">Facebook</a>
               <a href="https://www.pinterest.com/pin/create/button/?url=${pageUrl}&media=${media}&description=${title}" target="_blank">Pin It</a>
