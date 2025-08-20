@@ -207,7 +207,7 @@
     margin: auto !important;
     position: fixed !important;
     top: 50% !important;
-    left: calc(50% + 5px) !important;  /* shift right ~10px */
+    left: calc(50% + 15px) !important;  /* shift right ~10px */
     transform: translate(-50%, -50%) !important;
     border-radius: 12px !important;
     overflow: hidden !important;
@@ -238,7 +238,13 @@
     font-size: 16px !important;
   }
 }
-
+/* Hide the ConvertKit close "X" button */
+@media (max-width: 768px) {
+  .formkit-close,
+  .convertkit-close {
+    display: none !important;
+  }
+}
   </style>
 </head>
 
