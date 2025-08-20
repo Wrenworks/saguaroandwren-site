@@ -9,11 +9,11 @@
     body {
       margin: 0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background: url("assets/images/desertbackground_day.jpg") no-repeat center center fixed;
+      background: url("assets/images/desertbsackground_day.jpg") no-repeat center center fixed;
       background-size: cover;
     }
 
-    /* Header */
+    /* Header - matched with About */
     .header {
       position: fixed;
       top: 10px;
@@ -27,8 +27,7 @@
       height: 40px;
       margin-right: 10px;
     }
-    
-    /* Hamburger menu */
+
     .menu-toggle {
       font-size: 28px;
       background: none;
@@ -37,25 +36,28 @@
       cursor: pointer;
     }
 
-    nav {
+    .menu {
       display: none;
       position: absolute;
       top: 50px;
-      right: 15px;
+      right: 0;
       background: #fff;
-      border-radius: 6px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      overflow: hidden;
+      min-width: 180px;
+      font: 500 14px system-ui, sans-serif;
     }
 
-    nav a {
+    .menu a {
       display: block;
-      padding: 10px 15px;
-      color: #000;
+      padding: 12px 16px;
       text-decoration: none;
+      color: #333;
       font-weight: 500;
     }
 
-    nav a:hover {
+    .menu a:hover {
       background: #f0f0f0;
     }
 
@@ -63,7 +65,7 @@
     .container {
       max-width: 1200px;
       margin: 100px auto 40px;
-      padding: 15px;
+      padding: 20px;
       background: rgba(255, 255, 255, 0.9);
       border-radius: 12px;
     }
@@ -105,14 +107,14 @@
       .container {
         margin: 80px 15px 20px;
       }
-       .header img {
-    height: 32px;
-  }
+      .header img {
+        height: 32px;
+      }
       .menu-toggle {
         font-size: 24px;
       }
       h1 {
-        font-size: 1.5rem; /* smaller title on mobile */
+        font-size: 1.5rem;
       }
     }
   </style>
@@ -120,16 +122,16 @@
 <body>
 
   <!-- Header -->
-  <header>
+  <div class="header">
     <img src="assets/images/SaguaroWren-vector_logo-row.png" alt="Saguaro & Wren Logo">
     <button class="menu-toggle">☰</button>
-    <nav id="dropdown">
+    <div class="menu">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="archive.html">Strip Archive</a>
       <a href="privacy.html">Privacy Policy</a>
-    </nav>
-  </header>
+    </div>
+  </div>
 
   <!-- Main content -->
   <div class="container">
@@ -139,10 +141,9 @@
 
   <script>
     // Toggle hamburger menu
-    const menuBtn = document.querySelector('.menu-toggle');
-    const dropdown = document.getElementById('dropdown');
-    menuBtn.addEventListener('click', () => {
-      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      const menu = document.querySelector('.menu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
     });
 
     // Load strips from JSON
