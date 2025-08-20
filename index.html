@@ -207,7 +207,7 @@
     margin: auto !important;
     position: fixed !important;
     top: 50% !important;
-    left: calc(50% + 7px) !important;  /* shift right ~10px */
+    left: calc(50% + 9px) !important;  /* shift right ~10px */
     transform: translate(-50%, -50%) !important;
     border-radius: 12px !important;
     overflow: hidden !important;
@@ -245,7 +245,22 @@
     display: none !important;
   }
 }
-  </style>
+ @media (max-width: 768px) {
+  /* tighten headline spacing under the image */
+  .convertkit-form h1,
+  .convertkit-form h2,
+  .convertkit-form h3,
+  .formkit-form h1,
+  .formkit-form h2,
+  .formkit-form h3,
+  .formkit-popup h1,
+  .formkit-popup h2,
+  .formkit-popup h3 {
+    margin-top: -10px !important; /* pull headline up */
+    margin-bottom: 8px !important; /* keep space before inputs tighter */
+  }
+}
+ </style>
 </head>
 
 <body onload="init();">
