@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Hot Sands",
+    "episode": 4,
+    "date": "2025-08-22",
+    "file": "assets/images/Saguaro-and-Wren---Episode_4-Hot-Sands.jpg"
+  },
+  {
+    "title": "Heat Stroke",
+    "episode": 3,
+    "date": "2025-08-15",
+    "file": "assets/images/SaguaroandWren-HeatStroke.jpg"
+  },
+  {
+    "title": "Tumbleweed Trouble",
+    "episode": 2,
+    "date": "2025-08-08",
+    "file": "assets/images/SaguaroAndWren-TumbleweedTrouble.jpg"
+  },
+  {
+    "title": "Morning Routine",
+    "episode": 1,
+    "date": "2025-08-01",
+    "file": "assets/images/SaguaroandWren_Morning-Routine.jpg"
+  }
+]
