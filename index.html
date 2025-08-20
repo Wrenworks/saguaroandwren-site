@@ -126,8 +126,8 @@
 @media (max-width: 768px) {
   .formkit-overlay {
     display: flex !important;
-    align-items: center !important;      /* ✅ vertical center */
-    justify-content: center !important;  /* ✅ horizontal center */
+    align-items: center !important;      /* vertical center */
+    justify-content: center !important;  /* horizontal center */
     padding: 20px !important;
     background: rgba(0,0,0,0.6) !important;
   }
@@ -135,9 +135,9 @@
   .convertkit-form,
   .formkit-form,
   .formkit-popup {
-    width: 85% !important;          /* a little narrower */
-    max-width: 380px !important;    /* slightly smaller overall */
-    max-height: 70vh !important;    /* shrink height */
+    width: 85% !important;
+    max-width: 360px !important;     /* a touch smaller */
+    max-height: 70vh !important;
     margin: auto !important;
     border-radius: 12px !important;
     overflow-y: auto !important;
@@ -145,14 +145,56 @@
     padding: 16px !important;
     box-sizing: border-box !important;
 
-    /* ✅ kill injected offsets */
+    /* remove injected offsets */
     position: relative !important;
     left: auto !important;
     right: auto !important;
     transform: none !important;
 
-    /* ✅ manual horizontal adjustment */
-    margin-left: 25px !important; 
+    /* shift to right by 35px */
+    margin-left: 35px !important;
+  }
+
+  /* Make inner content shrink properly */
+  .convertkit-form *,
+  .formkit-form *,
+  .formkit-popup * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .convertkit-form img,
+  .formkit-form img,
+  .formkit-popup img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+  }
+
+  .convertkit-form input,
+  .formkit-form input,
+  .formkit-popup input,
+  .convertkit-form button,
+  .formkit-form button,
+  .formkit-popup button {
+    width: 100% !important;        /* ✅ full width */
+    padding: 10px 14px !important;
+    font-size: 14px !important;
+    margin: 6px 0 !important;
+  }
+
+  .convertkit-form h1,
+  .convertkit-form h2,
+  .convertkit-form h3,
+  .formkit-form h1,
+  .formkit-form h2,
+  .formkit-form h3,
+  .formkit-popup h1,
+  .formkit-popup h2,
+  .formkit-popup h3 {
+    font-size: 16px !important;
+    margin-bottom: 10px !important;
+    line-height: 1.3 !important;
   }
 }
 
