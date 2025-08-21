@@ -41,6 +41,7 @@
       justify-content: flex-end;
       align-items: center;
       padding: 0 15px;
+      z-index: 1000;                 /* ensure header sits above content */
     }
 
     .site-logo { height: 40px; width: auto; margin-right: 10px; }
@@ -62,6 +63,7 @@
       background:#fff; border-radius: 6px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       padding: 10px; min-width: 180px;
+      z-index: 1001;                /* higher than header + content */
     }
     .menu a {
       display:block; padding:8px 12px; text-decoration:none;
