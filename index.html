@@ -308,3 +308,91 @@
     <button class="sw-trigger">Connect</button>
     <div class="sw-icons">
       <!-- Email -->
+      <a href="mailto:saguaroandwren@gmail.com"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M2 5h20v14H2V5zm2 2v10h16V7l-8 5L4 7z"/></svg></a>
+      <!-- Webtoon -->
+      <a href="https://www.webtoons.com/en/canvas/saguaro-wren/list?title_no=1078202" target="_blank"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M2 4h4l2.2 12L12 9.5 15.8 16 18 4h4l-3 16h-3.2L12 13.5 8.2 20H5L2 4z"/></svg></a>
+      <!-- Pinterest -->
+      <a href="https://pin.it/1NRoGETV6" target="_blank"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.5 19.4l1.4-5.9s-.3-.6-.3-1.6c0-1.5.9-2.6 2-2.6.9 0 1.3.7 1.3 1.5 0 .9-.6 2.3-.9 3.6-.3 1.1.6 2 1.7 2 2.1 0 3.7-2.2 3.7-5.3 0-2.8-2-4.7-4.9-4.7-3.3 0-5.2 2.4-5.2 4.9 0 1 .4 2.1 1 2.7l-.3 1.2c-.1.2-.2.2-.4.1-1.5-.7-2.5-2.9-2.5-4.6 0-3.8 2.8-7.2 8-7.2 4.2 0 7.5 3 7.5 7.1 0 4.2-2.6 7.6-6.3 7.6-1.2 0-2.4-.6-2.8-1.3l-.8 3c-.3 1.1-1 2.4-1.5 3.2A10 10 0 1 0 12 2z"/></svg></a>
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/share/1BcbZCB8XQ/?mibextid=wwXlfr" target="_blank"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M13 10h3l-.5 3H13v8h-3v-8H8v-3h2V8.5C10 6.6 11 5 13.8 5H16v3h-1.8c-.8 0-1.2.3-1.2 1.1V10z"/></svg></a>
+      <!-- Instagram -->
+      <a href="https://instagram.com/saguaroandwren" target="_blank"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.25" fill="currentColor"/></svg></a>
+    </div>
+  </div>
+
+  <!-- KIT POPUP -->
+  <script async data-uid="bfe28e187a" src="https://saguaro-and-wren.kit.com/bfe28e187a/index.js"></script>
+
+  <script>
+    var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
+    function init() {
+      canvas = document.getElementById("canvas");
+      anim_container = document.getElementById("animation_container");
+      dom_overlay_container = document.getElementById("dom_overlay_container");
+      var comp = AdobeAn.getComposition("5EB7B55DAEFF4DE0842EEF5E2BDFA162");
+      var lib = comp.getLibrary();
+      var loader = new createjs.LoadQueue(false);
+      loader.setMaxConnections(10);
+      loader.loadManifest(lib.properties.manifest, true);
+      loader.addEventListener("fileload", function(evt) {
+        if (evt.item.type === "image") comp.getImages()[evt.item.id] = evt.result;
+      });
+      loader.addEventListener("complete", function(evt) {
+        var lib = comp.getLibrary();
+        var ss = comp.getSpriteSheet();
+        var queue = evt.target;
+        for (var i=0; i<lib.ssMetadata.length; i++) {
+          ss[lib.ssMetadata[i].name] = new createjs.SpriteSheet({
+            images:[queue.getResult(lib.ssMetadata[i].name)],
+            frames:lib.ssMetadata[i].frames
+          });
+        }
+        exportRoot = new lib.saguaroandWrenwebsite();
+        stage = new lib.Stage(canvas);
+        fnStartAnimation = function() {
+          stage.addChild(exportRoot);
+          createjs.Ticker.framerate = lib.properties.fps;
+          createjs.Ticker.addEventListener("tick", stage);
+        }
+        AdobeAn.makeResponsive(true,'both',true,2,[canvas,anim_container,dom_overlay_container]);
+        AdobeAn.compositionLoaded(lib.properties.id);
+        fnStartAnimation();
+        document.getElementById("loading-screen").style.display = "none";
+      });
+    }
+
+    // Fix scaling on return after form submission
+    window.addEventListener("resize", () => {
+      if(stage) stage.update();
+    });
+  </script>
+
+  <!-- Background Music Toggle + Hamburger -->
+  <script>
+    const audio = document.getElementById('bg-audio');
+    const btn = document.getElementById('music-toggle');
+    const speakerOn = `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M14 9.23v5.54c.58-.45 1-.99 1.26-1.54.26-.55.4-1.18.4-1.83s-.14-1.28-.4-1.83c-.26-.55-.68-1.09-1.26-1.54z"/></svg>`;
+    const speakerOff = `<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M19 3L3 19l1.5 1.5L20.5 4.5 19 3z"/></svg>`;
+    btn.innerHTML = speakerOff;
+    btn.addEventListener('click', () => {
+      if(audio.paused){ audio.play(); btn.innerHTML = speakerOn; }
+      else{ audio.pause(); btn.innerHTML = speakerOff; }
+    });
+    document.getElementById('hamburger').addEventListener('click',()=>{
+      const menu = document.getElementById('dropdown-menu');
+      menu.style.display = menu.style.display==='block'?'none':'block';
+    });
+
+    // Social widget toggle
+    const swTrigger = document.querySelector('.sw-trigger');
+    const swIcons = document.querySelector('.sw-icons');
+    swTrigger.addEventListener('click', () => {
+      swIcons.style.display = swIcons.style.display === 'flex' ? 'none' : 'flex';
+    });
+  </script>
+
+  <!-- CreateJS -->
+  <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+  <script src="saguaroandWrenwebsite.js"></script>
+</body>
+</html>
